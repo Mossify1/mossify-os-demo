@@ -198,6 +198,8 @@ const STAGES = [
 ];
 const LABELS = {agents:'always-on agents', jobs:'scheduled jobs', hub:'hub sections', skills:'skills', projects:'projects'};
 const $ = id => document.getElementById(id);
+// Public host (github.io / demo.mossify.ai): presenter mode on by default, no View-as, banner unless embedded on mossify.ai.
+const EMBED=/[?&]embed=1/.test(location.search), PUBLIC=/(github\.io|mossify\.ai)$/.test(location.hostname);
 const seen = new Set();
 let cur = 0, tab = 0, tourAt = 0, asName = 'Lucas', shown = {agents:0,jobs:0,hub:0,skills:0,projects:0};
 const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
@@ -221,7 +223,7 @@ function setStage(i,keepTab){
   renderStats(s,prev===s?null:prev);
   if(!keepTab)tab=0;tourAt=0;
   renderTabs();renderDrawer();
-  $('asbox').hidden=!s.tabs.some(t=>t[1].startsWith('hub'));
+  $('asbox').hidden=PUBLIC||!s.tabs.some(t=>t[1].startsWith('hub'));
   if(location.hash!=='#'+s.id)history.replaceState(null,'','#'+s.id);
   if(EMBED)$('fullb').href=location.pathname+'#'+s.id;
 }
@@ -279,12 +281,11 @@ addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('input,sele
 function openHash(){const h=location.hash.slice(1).split('/');const i=STAGES.findIndex(s=>s.id===h[0]);if(i<0)return false;setStage(i);
   if(h[1]!==undefined&&STAGES[i].tabs[+h[1]]){tab=+h[1];renderTabs()}if(h[2])act('go:'+h[2]);return true}
 addEventListener('hashchange',()=>{const h=location.hash.slice(1);const i=STAGES.findIndex(s=>s.id===h.split('/')[0]);if(i>=0&&(i!==cur||h.includes('/')))openHash()});
-const EMBED=/[?&]embed=1/.test(location.search), PUBLIC=/(github\.io|mossify\.ai)$/.test(location.hostname);
 if(EMBED){document.body.classList.add('embed');$('fullb').hidden=false}
 if(PUBLIC&&!EMBED)$('sitebar').hidden=false;
 addEventListener('resize',()=>setStage(cur,true));
 buildRail();
-{const t=store.get('demo-theme');if(t)document.documentElement.dataset.theme=t;if(store.get('demo-present')==='1')setPresent(true);
+{const t=store.get('demo-theme');if(t)document.documentElement.dataset.theme=t;const pv=store.get('demo-present');if(pv===null?PUBLIC:pv==='1')setPresent(true);
  if(!openHash())setStage(0)}
 </script>
 </body>
