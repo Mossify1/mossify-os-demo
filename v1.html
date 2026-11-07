@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Assistant</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: an editor window. Project + skill list on the left, a terminal session in the middle, the finished result as a card on the right. */
+:root{--bg:#ecebe4;--win:#1e1f1b;--panel:#262722;--line:#3a3b33;--fg:#e9e8df;--muted:#9c9b8d;--accent:#d97757;--moss:#a7b386;--ok:#8cc04a;--card:#fff;--card-fg:#2b2a26;--card-muted:#6b6a60;--card-line:#e2e0d6;
+  --display:"Poppins",system-ui,sans-serif;--body:"Source Sans 3",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121310;--card:#22221d;--card-fg:#ecebe2;--card-muted:#a9a796;--card-line:#38372f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121310;--card:#22221d;--card-fg:#ecebe2;--card-muted:#a9a796;--card-line:#38372f;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);font:15px/1.5 var(--body);color:var(--card-fg);padding:16px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:12px}
+button{font:inherit;cursor:pointer}
+.banner{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--card-line);border-radius:12px;padding:10px 14px}
+.banner b{font:600 15px/1.3 var(--display)}
+.banner .pill{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:5px 9px;background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+.banner .sched{margin-left:auto;font:500 12px/1.3 var(--mono);color:var(--card-muted);display:flex;gap:6px;align-items:center}
+.banner .sched i{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block}
+.win{flex:1;min-height:0;display:grid;grid-template-columns:220px minmax(0,1fr) 340px;background:var(--win);border-radius:14px;overflow:hidden;border:1px solid var(--line);color:var(--fg)}
+.side{background:var(--panel);border-right:1px solid var(--line);padding:12px;overflow:auto;display:grid;align-content:start;gap:14px}
+.side h3{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.side ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.side li{font:400 13px/1.4 var(--mono);color:var(--muted);padding:3px 6px;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.skill{display:block;width:100%;text-align:left;background:none;border:0;color:var(--fg);font:500 13px/1.4 var(--mono);padding:6px 8px;border-radius:7px}
+.skill:hover,.skill.on{background:#33352d}
+.skill small{display:block;color:var(--muted);font:400 11.5px/1.3 var(--body)}
+.term{padding:14px 16px;overflow:auto;font:400 13.5px/1.6 var(--mono);display:flex;flex-direction:column;gap:6px}
+.term .hello{color:var(--muted)}
+.term .me{color:var(--fg)}.term .me::before{content:"> ";color:var(--accent)}
+.term .tool{color:var(--moss)}.term .tool::before{content:"⏺ ";color:var(--ok)}
+.term .say{color:var(--fg);font-family:var(--body);font-size:15px}
+.term .cur{display:inline-block;width:8px;height:15px;background:var(--fg);vertical-align:-2px;animation:b 1s steps(1) infinite}
+@keyframes b{50%{opacity:0}}
+.res{background:var(--card);color:var(--card-fg);padding:16px;overflow:auto;display:grid;align-content:start;gap:10px;border-left:1px solid var(--line)}
+.res h4{font:600 16px/1.3 var(--display);margin:0}
+.res .lbl{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--card-muted)}
+.res .doc{border:1px solid var(--card-line);border-radius:10px;padding:12px;font-size:14px;white-space:pre-wrap}
+.res table{border-collapse:collapse;font-size:13px;width:100%}.res td,.res th{border-bottom:1px solid var(--card-line);padding:5px 4px;text-align:left}.res th{font:500 11px/1 var(--mono);color:var(--card-muted);text-transform:uppercase}
+.res .t{display:flex;gap:8px;align-items:center;font:500 12px/1.3 var(--mono);color:var(--card-muted)}
+.empty{color:var(--card-muted)}
+@media (max-width:900px){.win{grid-template-columns:minmax(0,1fr)}.side{max-height:200px}.res{border-left:0;border-top:1px solid var(--line)}}
+@media (prefers-reduced-motion: reduce){.term .cur{animation:none}}
+</style>
+</head>
+<body>
+<div class="banner"><span class="pill">V1</span><b>Powerful, but only while someone is at the keyboard.</b><span class="sched"><i></i>Running on its own: Gmail labeling (every 10 min). That’s it.</span></div>
+<div class="win">
+  <aside class="side">
+    <div><h3>Skills</h3><div id="skills"></div></div>
+    <div><h3>Projects</h3><ul><li>email-labeling/</li><li>email-intelligence/</li><li>freight-savings/</li><li>klaviyo-consolidation/</li><li>mossify-dtc-site/</li><li>wholesale-lead-gen/</li><li>video-editing/</li><li>Landscape Moss/</li><li>timesheets/</li><li>harvest-dropoffs/</li></ul></div>
+    <div><h3>Memory</h3><ul><li>CLAUDE.md</li><li>context/business.md</li><li>references/voice.md</li><li>references/brand.md</li></ul></div>
+  </aside>
+  <section class="term" id="term" aria-live="polite"><div class="hello">Claude Code · ~/Mossify OS<br>Pick a skill on the left to run a real job, the way it worked in weeks 1–9.</div></section>
+  <section class="res" id="res"><span class="lbl">Result</span><p class="empty">The finished work shows up here.</p></section>
+</div>
+<script>
+const SK = {
+  'copy-polish': {label:'/copy-polish', sub:'Rewrite anything in Mossify’s voice',
+    ask:'/copy-polish the email to Lakeview Coir Mills about the late shipment, keep it friendly',
+    tools:['Read references/voice.md (style learned from 1,762 sent emails)','Read context/suppliers.md → Lakeview Coir Mills, terms Net 30','Fact-check: PO-2026-002, ETA moved twice'],
+    say:'Done. Shorter, warmer, and it asks for one clear thing: a firm ship date by Friday.',
+    title:'Email to Lakeview Coir Mills', body:'Hi Dana,\n\nHope the week’s going well! Quick one on PO-2026-002: we’ve got spring orders waiting on those coir poles, so a firm ship date would really help us plan.\n\nCould you confirm one by Friday? If anything’s holding it up, tell me and we’ll figure it out together.\n\nThanks so much,\nLucas', time:'2 min (was 15 min)'},
+  'ops': {label:'/ops reorder', sub:'What’s running low vs sales speed',
+    ask:'/ops reorder',
+    tools:['Shopify: pull 90-day sales for 160 SKUs','Shopify: stock at both warehouses','Compute days of cover vs supplier lead time'],
+    say:'Three SKUs will run out before a new order could arrive. The 30" moss pole is the urgent one.',
+    title:'Reorder check', table:[['SKU','Cover','Lead','Order'],['Moss pole 30"','21 d','45 d','2,400'],['Sphagnum 150g','34 d','60 d','2,800'],['Coir pole 16"','40 d','45 d','1,200']], time:'3 min (was ~1 hour)'},
+  'blog': {label:'/blog', sub:'SEO post, uploaded as a draft',
+    ask:'/blog how to train a monstera up a moss pole',
+    tools:['Keyword check: "monstera moss pole" (2.9k/mo)','Outline from the top 5 results','Write in house style, link 3 products','Upload to Shopify as an unpublished draft'],
+    say:'Draft is in Shopify, not published. 1,450 words, 3 product links, meta title under 60 characters.',
+    title:'How to train a monstera up a moss pole', body:'Draft saved in Shopify (unpublished)\n\n1. Pick a pole a little taller than the plant\n2. Soak the moss before you start\n3. Point the aerial roots at the pole\n4. Tie loosely with plant tape\n5. Mist the pole every few days…', time:'6 min (was half a day)'},
+  'video': {label:'/video make', sub:'Footage → finished short',
+    ask:'/video make a 15s reel from the repot clips',
+    tools:['Transcribe 4 clips (whisper)','Pick the 3-second hook: the pole bending','Cut, captions, music, loudness −14 LUFS','QC pass + caption for each platform'],
+    say:'15-second vertical cut is ready with captions and a post for Instagram, TikTok and YouTube.',
+    title:'Repot reel · 15s', body:'repot-reel-v1.mp4 · 1080×1920 · 15.2s\n\nHook: “Your monstera wants to climb.”\nCaption IG: Give it something to climb 🌿 #monstera #plantcare', time:'10 min (was 2 hours)'},
+  'seo': {label:'/seo', sub:'Store SEO audit',
+    ask:'/seo audit mossify.ca collections',
+    tools:['Scan 42 collection pages','Check titles, meta, H1s, alt text'],
+    say:'11 pages are missing meta descriptions and 6 have duplicate titles. Fixes are drafted, nothing changed live.',
+    title:'SEO audit', table:[['Issue','Pages'],['Missing meta description','11'],['Duplicate title','6'],['Image alt text missing','23']], time:'4 min'},
+  'labeling': {label:'Gmail labeling', sub:'The one scheduled job',
+    ask:'show me what the labeler did this morning',
+    tools:['Read the labeler log (runs every 10 min)'],
+    say:'Since 6 AM it sorted 84 emails: 31 Orders, 22 Suppliers, 18 Newsletters, 13 Customers.',
+    title:'Inbox, sorted', table:[['Label','Emails'],['Orders','31'],['Suppliers','22'],['Newsletters','18'],['Customers','13']], time:'automatic'},
+};
+const term=document.getElementById('term'),res=document.getElementById('res');let busy=false;
+const sl=document.getElementById('skills');
+Object.entries(SK).forEach(([k,s])=>{const b=document.createElement('button');b.className='skill';b.type='button';b.dataset.k=k;b.innerHTML=`${s.label}<small>${s.sub}</small>`;b.onclick=()=>runSkill(k);sl.appendChild(b)});
+const wait=ms=>new Promise(r=>setTimeout(r,matchMedia('(prefers-reduced-motion: reduce)').matches?0:ms));
+async function runSkill(k){if(busy)return;busy=true;const s=SK[k];document.querySelectorAll('.skill').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+  term.innerHTML='';const me=document.createElement('div');me.className='me';term.appendChild(me);
+  for(const ch of s.ask){me.textContent+=ch;await wait(18)}
+  await wait(300);
+  for(const t of s.tools){const d=document.createElement('div');d.className='tool';d.textContent=t;term.appendChild(d);term.scrollTop=1e6;await wait(650)}
+  const say=document.createElement('div');say.className='say';say.textContent=s.say;term.appendChild(say);
+  const c=document.createElement('div');c.innerHTML='<span class="cur"></span>';term.appendChild(c);
+  res.innerHTML=`<span class="lbl">Result</span><h4>${s.title}</h4>`+(s.body?`<div class="doc">${s.body.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</div>`:'')+
+    (s.table?`<table><thead><tr>${s.table[0].map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${s.table.slice(1).map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</tbody></table>`:'')+
+    `<span class="t">⏱ ${s.time}</span>`;
+  busy=false}
+window.runSkill=runSkill;
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morning Brief</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an email client. Inbox list on the left, the 7:30 AM brief open on the right, rendered like the real email. */
+:root{--bg:#f1f2ec;--surface:#fff;--line:#dfe1d6;--fg:#272922;--muted:#686a5c;--moss:#58604a;--sage:#eef0e6;--ok:#3f7a4a;--warn:#a8720f;--bad:#b0412e;
+  --display:"Poppins",system-ui,sans-serif;--body:"Source Sans 3",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#13160f;--surface:#1c2018;--line:#323828;--fg:#eaecdf;--muted:#a3a593;--moss:#8f9a72;--sage:#252a20;--ok:#8cc04a;--warn:#e3b23e;--bad:#ec5f55;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#13160f;--surface:#1c2018;--line:#323828;--fg:#eaecdf;--muted:#a3a593;--moss:#8f9a72;--sage:#252a20;--ok:#8cc04a;--warn:#e3b23e;--bad:#ec5f55;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--body);display:grid;grid-template-columns:300px minmax(0,1fr)}
+.list{border-right:1px solid var(--line);background:var(--surface);overflow:auto}
+.list h2{font:600 15px/1 var(--display);margin:0;padding:16px}
+.mail{padding:10px 16px;border-top:1px solid var(--line);display:grid;gap:2px;font-size:14px;color:var(--muted)}
+.mail b{color:var(--fg);font-weight:600}
+.mail.on{background:var(--sage);border-left:3px solid var(--moss)}
+.read{overflow:auto;padding:24px max(16px,env(safe-area-inset-right,0px)) 32px 24px}
+.env{max-width:720px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;display:grid;gap:18px}
+.from{display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px}
+.av{width:40px;height:40px;border-radius:50%;background:var(--moss);color:#fff;display:grid;place-items:center;font:700 16px var(--display)}
+.from div{display:grid}.from small{color:var(--muted)}
+h1{font:700 22px/1.25 var(--display);margin:0;text-wrap:balance}
+h3{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+section ul{margin:0;padding-left:18px;display:grid;gap:5px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kv div{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;gap:2px}
+.kv b{font:700 20px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.kv span{font-size:13px;color:var(--muted)}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+.go{display:inline-block;font:500 12px/1 var(--mono);border:1px solid var(--line);border-radius:6px;padding:3px 6px;margin-left:4px}
+.reply{border:1px dashed var(--line);border-radius:10px;padding:12px;color:var(--muted);font-size:14px}
+@media (max-width:760px){body{grid-template-columns:minmax(0,1fr)}.list{display:none}}
+</style>
+</head>
+<body>
+<aside class="list"><h2>Inbox</h2><div id="mails"></div></aside>
+<main class="read"><article class="env" id="brief"></article></main>
+<script>
+const stage = new URLSearchParams(location.search).get('stage') === 'v2' ? 'v2' : 'now';
+const date = stage === 'v2' ? 'Tue, Oct 20' : 'Fri, Nov 6';
+const others = stage === 'v2' ? [['Shopify', 'Order #W14411 placed'], ['Lakeview Coir Mills', 'Re: PO-2026-002'], ['Klaviyo', 'Campaign report']] :
+  [['Mossify OS', 'Plan: pull top 10 SKUs by margin, reply GO'], ['Alert watch', 'Back up: Etsy sync'], ['Fernhollow Garden Co.', 'Spring preorder'], ['Klaviyo', 'Campaign report']];
+document.getElementById('mails').innerHTML = `<div class="mail on"><b>Mossify OS</b>Morning brief · ${date}<small>7:30 AM</small></div>` + others.map(o => `<div class="mail"><b>${o[0]}</b>${o[1]}</div>`).join('');
+const V2 = `
+<div class="from"><span class="av">M</span><div><b>Mossify OS</b><small>to Lucas · 7:30 AM</small></div></div>
+<h1>Morning brief · ${date}</h1>
+<section><h3>Needs you</h3><ul><li>2 invoices over 30 days late (CA$3,180)</li><li>Ads agent suggests +20% on Shopping (shadow mode, nothing changed)</li></ul></section>
+<section><h3>Yesterday</h3><div class="kv"><div><b>$2,140</b><span>sales, all stores</span></div><div><b>3.6x</b><span>ad return, 7 days</span></div><div><b>$38.2k</b><span>customers owe us</span></div></div></section>
+<section><h3>Agents</h3><ul><li class="ok">5 of 6 ran clean overnight</li><li class="warn">Instagram agent: 4 comments sent to you</li></ul></section>
+<p class="reply">Reply to this email to give the OS a job.</p>`;
+const NOW = `
+<div class="from"><span class="av">M</span><div><b>Mossify OS</b><small>to Lucas · 7:30 AM</small></div></div>
+<h1>Morning brief · ${date}</h1>
+<section><h3>Needs you (3)</h3><ul>
+<li>Approve the coir pole PO (CAD 4,180 deposit) <span class="go">Reply OK PO-14</span></li>
+<li>Drawback claim DBK-2026-004 is ready for your OK (CAD 1,940)</li>
+<li>Remittance from Greenleaf Pet &amp; Garden names no order, match USD 412.60</li></ul></section>
+<section><h3>Sales and ads</h3><div class="kv"><div><b>$2,490</b><span>yesterday · <span class="ok">▲ 13%</span> vs last Thu</span></div><div><b>4.1x</b><span>ad return 7d · goal 4.0x</span></div><div><b>$1,013</b><span>ad spend 7d</span></div><div><b>$41.8k</b><span>owed · $9.6k overdue</span></div></div>
+<ul style="margin-top:10px"><li>Ads agent moved Shopping +20% (4.8x). Two weak Meta tests cut and renamed CUT.</li></ul></section>
+<section><h3>Today</h3><ul><li>10:00 AM Weekly numbers (30 min)</li><li>1:30 PM Call with a garden-centre buyer</li><li>4:00 PM Ad creative review</li></ul></section>
+<section><h3>Stock</h3><ul><li class="bad">1 SKU out: Heart moss basket</li><li class="warn">4 run out inside lead time. PO drafts are in your Gmail.</li></ul></section>
+<section><h3>Agents</h3><ul><li class="ok">17 of 18 healthy · 279 actions yesterday · AI cost $1.84</li><li class="warn">Etsy sync failed twice. The fix agent will try once today, or press Fix in the Command Center.</li></ul></section>
+<section><h3>This week (chief of staff)</h3><ul><li><b>W45-1</b> Auto-send the spring preorder reminder to accounts that opened but didn’t order (~$4k/mo)</li><li><b>W45-2</b> Merge the two inventory alerts into one daily line</li><li><b>W45-3</b> “Reorder in one click” link on every invoice email</li></ul></section>
+<section><h3>Market watch</h3><ul><li>A new rule for small cross-border parcels starts in January (demo item). US orders already ship from the Indiana warehouse, so no change for us.</li><li>Two competitors started running “moss pole + soil” bundles on Meta. Test a bundle ad next week.</li></ul></section>
+<p class="reply">Reply “GO W45-1” to start an idea, or reply with any job. The plan comes back first.</p>`;
+document.getElementById('brief').innerHTML = stage === 'v2' ? V2 : NOW;
+document.addEventListener('click', e => { const a = e.target.closest('a'); if (a) e.preventDefault(); });
+</script>
+</body>
+</html>

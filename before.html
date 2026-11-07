@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Monday Before</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a cluttered desk. Clock + tally on top, a wall of chores below; each chore opens the manual steps and eats clock time. */
+:root{--bg:#efeee8;--surface:#fff;--line:#dcd9cd;--fg:#2b2a26;--muted:#6b6a60;--moss:#58604a;--warn:#a8720f;--bad:#b0412e;--note:#f6e7a6;--note-ink:#4a3f12;
+  --display:"Poppins",system-ui,sans-serif;--body:"Source Sans 3",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#171713;--surface:#22221d;--line:#38372f;--fg:#ecebe2;--muted:#a9a796;--moss:#8f9a72;--warn:#e3b23e;--bad:#ec7a68;--note:#5a5124;--note-ink:#f6e7a6;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171713;--surface:#22221d;--line:#38372f;--fg:#ecebe2;--muted:#a9a796;--moss:#8f9a72;--warn:#e3b23e;--bad:#ec7a68;--note:#5a5124;--note-ink:#f6e7a6;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 var(--body);padding:20px max(16px,env(safe-area-inset-right,0px)) 28px max(16px,env(safe-area-inset-left,0px))}
+button{font:inherit;color:inherit;cursor:pointer}
+.head{display:flex;gap:16px;flex-wrap:wrap;align-items:end;justify-content:space-between;max-width:1180px;margin:0 auto 18px}
+h1{font:800 clamp(26px,3.4vw,40px)/1.05 var(--display);margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:6px 0 0;max-width:60ch}
+.clock{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 16px;display:grid;gap:2px;min-width:230px}
+.clock .t{font:700 34px/1 var(--display);font-variant-numeric:tabular-nums}
+.clock .l{font:500 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.bar{height:8px;border-radius:8px;background:var(--line);overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;width:0;background:var(--bad);transition:width .5s}
+.wall{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.chore{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:8px;transition:transform .15s,border-color .15s}
+.chore:hover{transform:translateY(-2px);border-color:var(--moss)}
+.chore.done{opacity:.55}
+.chore .tag{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.chore b{font:700 18px/1.25 var(--display)}
+.chore .big{font:800 30px/1 var(--display);color:var(--bad)}
+.chore .cost{font:500 12px/1.2 var(--mono);color:var(--warn)}
+.chore.note{background:var(--note);color:var(--note-ink);border-color:transparent;transform:rotate(-1.2deg);font-family:var(--display)}
+.chore.note:nth-child(odd){transform:rotate(1deg)}
+.chore.note .tag,.chore.note .cost{color:var(--note-ink);opacity:.8}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--fg);max-width:min(560px,92vw);padding:20px}
+dialog::backdrop{background:rgba(20,20,15,.45)}
+dialog h2{font:700 22px/1.2 var(--display);margin:0 0 6px}
+.steps{list-style:none;padding:0;margin:14px 0;display:grid;gap:8px}
+.steps li{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:10px;border:1px solid var(--line);opacity:.45;transition:opacity .3s}
+.steps li.on{opacity:1;border-color:var(--warn)}
+.steps li span{font:500 12px/1.6 var(--mono);color:var(--warn);flex:none;min-width:52px}
+.row{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.pbtn{border:0;background:var(--moss);color:#fff;border-radius:10px;padding:9px 14px;font:600 14px/1.2 var(--display)}
+.gbtn{border:1px solid var(--line);background:transparent;border-radius:10px;padding:9px 14px}
+.end{max-width:1180px;margin:18px auto 0;border-radius:16px;padding:18px;background:var(--surface);border:1px dashed var(--bad);display:none}
+.end.show{display:block}
+.end b{font:700 20px/1.3 var(--display)}
+.foot{max-width:1180px;margin:14px auto 0;color:var(--muted);font-size:13px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="head">
+  <div><h1>Monday, before the operating system</h1><p class="sub">Every card is a job somebody had to do by hand. Click one to do it the old way and watch the day disappear.</p></div>
+  <div class="clock" aria-live="polite"><span class="l">Monday</span><span class="t" id="time">8:00 AM</span><span class="l" id="spent">0h 00m of manual work</span><div class="bar"><i id="bar"></i></div></div>
+</div>
+<div class="wall" id="wall"></div>
+<div class="end" id="end"><b id="endt"></b><p>About 6 hours of copying, chasing and checking, every day, before any selling, new products or time with the team. Then the inbox fills up again.</p></div>
+<p class="foot">Times are typical estimates for illustration. Names and numbers are invented.</p>
+<dialog id="dlg"><h2 id="dt"></h2><p id="dd" style="margin:0;color:var(--muted)"></p><ol class="steps" id="ds"></ol><div class="row"><button class="gbtn" type="button" id="dc">Skip it</button><button class="pbtn" type="button" id="dgo">Do it by hand</button></div></dialog>
+<script>
+const CHORES = [
+  {tag:'Gmail', big:'512', title:'Unread emails', cost:45, desc:'Supplier replies, customer questions, carrier quotes and newsletters, all in one pile.',
+   steps:[['10 min','Scroll past newsletters to find anything urgent'],['15 min','Answer three “where’s my order?” emails'],['20 min','Forward a supplier invoice to the bookkeeper, flag the rest for later']]},
+  {tag:'Purchase order', big:'PO-448120', title:'Retype a PO into Shopify', cost:25, desc:'Fernhollow Garden Co. sent a 14-line PDF. Every line goes into a draft order by hand.',
+   steps:[['3 min','Open the PDF, find their item numbers'],['12 min','Look up each of our SKUs and case packs'],['7 min','Type 14 lines and prices into a draft order'],['3 min','Double-check the total against the PDF']]},
+  {tag:'Receivables', big:'$9,640', title:'Chase overdue invoices', cost:40, desc:'A spreadsheet of who owes what. Some numbers are a week old.',
+   steps:[['10 min','Export orders and update the sheet'],['15 min','Find each AP contact and write a reminder'],['15 min','Attach the right invoice PDF to each email']]},
+  {tag:'Instagram', big:'63', title:'Comments waiting for a reply', cost:35, desc:'Product questions, a wholesale lead, and a lot of spam.',
+   steps:[['10 min','Read every comment since Friday'],['20 min','Type replies one at a time'],['5 min','Delete spam, DM the possible wholesale lead']]},
+  {tag:'Stock', big:'2 out', title:'Count stock and reorder', cost:50, desc:'No live view of what’s running low. Best sellers sell out before anyone notices.',
+   steps:[['15 min','Pull inventory from two warehouses'],['20 min','Guess sales speed from last month'],['15 min','Write the supplier PO and email it']]},
+  {tag:'Freight', big:'1 quote', title:'Book a pallet shipment', cost:45, desc:'Call or email carriers one at a time and hope the first price is fair.',
+   steps:[['15 min','Email two carriers with dims and weights'],['20 min','Wait, follow up, compare two prices in a note'],['10 min','Book it and paste tracking somewhere']]},
+  {tag:'Ads', big:'?', title:'Check if ads are working', cost:30, desc:'Google and Meta each say something different. Usually skipped.',
+   steps:[['10 min','Log into both dashboards'],['15 min','Try to match spend to actual sales'],['5 min','Leave budgets as they are, unsure']]},
+  {tag:'Team', big:'4 people', title:'Find out who’s doing what', cost:30, desc:'Tasks live in texts, emails and memory.',
+   steps:[['15 min','Text each person for an update'],['15 min','Re-explain a decision from last week']]},
+  {tag:'Sticky note', title:'Follow up with the 3 quiet deals', cost:25, note:true, desc:'From two weeks ago.', steps:[['25 min','Dig up each thread and write a follow-up']]},
+  {tag:'Sticky note', title:'Post on IG this week!!', cost:40, note:true, desc:'Still not done.', steps:[['40 min','Find a photo, write a caption, post it']]},
+];
+let minutes=0;const DAY=CHORES.reduce((a,c)=>a+c.cost,0);
+function fmt(m){const h=8+Math.floor(m/60),mm=m%60,ap=h>=12?'PM':'AM',hh=((h+11)%12)+1;return hh+':'+String(mm).padStart(2,'0')+' '+ap}
+function tick(){document.getElementById('time').textContent=fmt(Math.min(minutes,DAY));document.getElementById('spent').textContent=Math.floor(minutes/60)+'h '+String(minutes%60).padStart(2,'0')+'m of manual work';
+  document.getElementById('bar').style.width=Math.min(100,minutes/DAY*100)+'%';if(minutes>=DAY){document.getElementById('endt').textContent='It’s '+fmt(minutes)+' and that was only the routine.';document.getElementById('end').classList.add('show')}}
+const wall=document.getElementById('wall');
+CHORES.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.className='chore'+(c.note?' note':'');
+  b.innerHTML=`<span class="tag">${c.tag}</span>${c.big?`<span class="big">${c.big}</span>`:''}<b>${c.title}</b><span class="cost">≈ ${c.cost} min by hand</span>`;b.onclick=()=>open(i);wall.appendChild(b)});
+let curI=null,running=false;
+function open(i){curI=i;const c=CHORES[i];document.getElementById('dt').textContent=c.title;document.getElementById('dd').textContent=c.desc;
+  document.getElementById('ds').innerHTML=c.steps.map(s=>`<li><span>${s[0]}</span>${s[1]}</li>`).join('');document.getElementById('dgo').disabled=false;document.getElementById('dlg').showModal()}
+document.getElementById('dc').onclick=()=>document.getElementById('dlg').close();
+document.getElementById('dgo').onclick=async()=>{if(running)return;running=true;document.getElementById('dgo').disabled=true;const c=CHORES[curI];const lis=[...document.querySelectorAll('#ds li')];
+  for(let k=0;k<lis.length;k++){lis[k].classList.add('on');const add=parseInt(c.steps[k][0]);for(let m=0;m<add;m++){minutes++;tick();await new Promise(r=>setTimeout(r,matchMedia('(prefers-reduced-motion: reduce)').matches?0:22))}}
+  wall.children[curI].classList.add('done');running=false;setTimeout(()=>document.getElementById('dlg').close(),500)};
+tick();
+</script>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mossify OS Walkthrough</title>
+<meta name="description" content="The AI operating system that runs Mossify, from a manual Monday to 18 agents and 64 scheduled jobs. Team Hub, Command Center and the morning brief, fully clickable on invented data.">
+<link rel="canonical" href="https://mossify1.github.io/mossify-os-demo/">
+<meta property="og:site_name" content="Mossify AI">
+<meta property="og:title" content="Try the AI operating system that runs Mossify">
+<meta property="og:description" content="Team Hub, Command Center and the 7:30 AM brief, start to now. Everything is clickable; every customer and amount is invented.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mossify1.github.io/mossify-os-demo/">
+<meta property="og:image" content="https://mossify1.github.io/mossify-os-demo/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Try the AI operating system that runs Mossify">
+<meta name="twitter:image" content="https://mossify1.github.io/mossify-os-demo/og.png">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one screen. Header + timeline rail on top, the live app in a frame, an explainer drawer on the right (stacks under on phones). */
+:root{
+  --bg:#f3f4ee; --surface:#ffffff; --surface-2:#eaece2; --line:#d8dbcc; --fg:#272922; --muted:#686a5c;
+  --moss:#58604a; --moss-ink:#ffffff; --sage:#b1b599; --blush:#f3a596; --blush-ink:#a9473a; --ok:#3f7a4a;
+  --display:"Poppins",ui-sans-serif,system-ui,sans-serif; --body:"Source Sans 3",ui-sans-serif,system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13160f; --surface:#1c2018; --surface-2:#252a20; --line:#323828; --fg:#eaecdf; --muted:#a3a593;
+  --moss:#7d8763; --moss-ink:#ffffff; --sage:#7f8568; --blush:#f2b0a5; --blush-ink:#f2b0a5; --ok:#8cc04a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13160f; --surface:#1c2018; --surface-2:#252a20; --line:#323828; --fg:#eaecdf; --muted:#a3a593;
+  --moss:#7d8763; --moss-ink:#ffffff; --sage:#7f8568; --blush:#f2b0a5; --blush-ink:#f2b0a5; --ok:#8cc04a; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font:16px/1.5 var(--body);display:flex;flex-direction:column;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--moss);outline-offset:2px}
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-block:12px 8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand img{height:26px;width:auto;display:block}
+.brand .logo-w{display:none}
+:root[data-theme="dark"] .brand .logo-b{display:none}:root[data-theme="dark"] .brand .logo-w{display:block}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand .logo-b{display:none}:root:not([data-theme="light"]) .brand .logo-w{display:block}}
+.brand .sep{width:1px;height:22px;background:var(--line)}
+.brand b{font:600 17px/1.2 var(--display);white-space:nowrap}
+.tools{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tbtn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;display:inline-flex;gap:6px;align-items:center}
+.tbtn[aria-pressed="true"]{background:var(--moss);color:var(--moss-ink);border-color:var(--moss)}
+.tbtn select{border:0;background:transparent;font:inherit;color:inherit}
+.sitebar{display:flex;gap:6px 18px;align-items:center;justify-content:center;flex-wrap:wrap;padding:8px 16px;background:var(--moss);color:var(--moss-ink);font:500 14px/1.3 var(--body)}
+.sitebar a{color:inherit;font-weight:700}
+.sitebar .back{font-weight:500;opacity:.85}
+body.embed .sitebar{display:none}
+.sitebar[hidden],.tbtn[hidden]{display:none!important}
+.fict{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--blush-ink);border:1px solid color-mix(in srgb,var(--blush) 70%,transparent);border-radius:999px;padding:6px 10px;white-space:nowrap}
+
+.rail-wrap{overflow-x:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.rail{display:grid;grid-template-columns:repeat(4,minmax(170px,1fr));position:relative;min-width:700px;padding-block:6px 4px}
+.rail-wrap{scrollbar-width:thin}
+.rail::before{content:"";position:absolute;left:12px;right:12px;top:21px;height:3px;background:var(--line);border-radius:3px}
+.rail .fill{position:absolute;left:12px;top:21px;height:3px;background:var(--moss);border-radius:3px;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.step{position:relative;background:none;border:0;text-align:left;padding:0 12px 6px 0;display:grid;gap:2px}
+.step .dot{width:18px;height:18px;border-radius:50%;background:var(--surface);border:3px solid var(--line);position:relative;z-index:1;margin:6px 0 6px 3px;transition:.3s}
+.step.done .dot{border-color:var(--moss);background:var(--moss)}
+.step.on .dot{border-color:var(--moss);background:var(--surface);box-shadow:0 0 0 5px color-mix(in srgb,var(--moss) 22%,transparent)}
+.step .wk{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.step .nm{font:700 17px/1.2 var(--display)}
+.step .dt{font-size:13px;color:var(--muted)}
+.step.on .nm{color:var(--moss)}
+.step:hover .nm{text-decoration:underline;text-underline-offset:3px}
+
+.stats{display:flex;gap:8px;flex-wrap:wrap;padding-block:4px 10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.stat{display:flex;align-items:baseline;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:7px 12px}
+.stat b{font:700 20px/1 var(--display);font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.stat .up{font:500 11px/1 var(--mono);color:var(--ok)}
+
+.main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:12px;padding-bottom:max(12px,env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body.present .main{grid-template-columns:minmax(0,1fr)}
+body.present .drawer,body.present .stats{display:none}
+.app{display:flex;flex-direction:column;min-height:0;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.apptabs{display:flex;gap:8px;padding:8px;border-bottom:1px solid var(--line);background:var(--surface-2);overflow-x:auto}
+.apptab{position:relative;border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 14px;display:grid;gap:2px;text-align:left;white-space:nowrap;color:var(--fg);transition:border-color .2s,transform .2s}
+.apptab b{font:700 15px/1.2 var(--display)}
+.apptab small{font-size:12px;color:var(--muted)}
+.apptab[aria-selected="true"]{border-color:var(--moss);background:var(--moss);color:var(--moss-ink)}
+.apptab[aria-selected="true"] small{color:color-mix(in srgb,var(--moss-ink) 80%,transparent)}
+.apptab.unseen{animation:pulse 1.6s ease-in-out infinite}
+.apptab.unseen::after{content:"Click me";position:absolute;top:-9px;right:10px;font:600 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;background:var(--blush);color:#3b1d16;border-radius:999px;padding:4px 7px}
+.apptab:hover{transform:translateY(-1px);border-color:var(--moss)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blush) 70%,transparent)}50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--blush) 0%,transparent)}}
+.apptabs .hint{margin-left:auto;align-self:center;font:500 11px/1 var(--mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase;padding-right:8px;white-space:nowrap}
+.frame{flex:1;min-height:0;position:relative;background:var(--bg)}
+.frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:1;transition:opacity .3s}
+.frame iframe.loading{opacity:.15}
+
+.drawer{min-height:0;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:16px}
+.eyebrow{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.drawer h2{font:800 24px/1.15 var(--display);margin:4px 0 0;text-wrap:balance}
+.drawer p{margin:0;color:var(--fg)}
+.drawer ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.drawer li::marker{color:var(--moss)}
+.box{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:8px;background:var(--bg)}
+.try{display:grid;gap:6px}
+.try button{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 10px;font-size:14px;display:flex;gap:8px;align-items:flex-start}
+.try button:hover{border-color:var(--moss)}
+.try button i{font:normal 500 11px/1.6 var(--mono);color:var(--moss);flex:none}
+.tour{display:grid;gap:10px}
+.tour .q{font-weight:600}
+.tour .nav{display:flex;gap:8px;align-items:center}
+.tour .nav span{font:500 12px/1 var(--mono);color:var(--muted);margin-right:auto}
+.pbtn{border:0;background:var(--moss);color:var(--moss-ink);border-radius:10px;padding:8px 14px;font:600 14px/1.2 var(--display)}
+.gbtn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 12px;font-size:14px}
+.next-stage{margin-top:auto}
+.foot{font-size:13px;color:var(--muted)}
+.kbd{font:500 11px/1 var(--mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:2px 5px}
+
+@media (max-width:900px){
+  .brand b{white-space:normal;font-size:15px;line-height:1.15}
+  .brand{flex:1 1 220px}
+  body{overflow:auto;height:auto}
+  .main{grid-template-columns:minmax(0,1fr);flex:none}
+  .app{height:78vh;min-height:520px}
+  .drawer{overflow:visible}
+  .fict{display:none}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="sitebar" id="sitebar" hidden>
+  <span>This is the system that runs Mossify, shown on invented data. Want one for your business?</span>
+  <a href="https://mossify.ai/pages/book">Book a call</a>
+  <a class="back" href="https://mossify.ai/">mossify.ai</a>
+</div>
+
+<header class="top">
+  <div class="brand"><img class="logo-b" src="logo-black.png" alt="Mossify"><img class="logo-w" src="logo-white.png" alt="Mossify"><span class="sep"></span><b>Operating system, start to now</b></div>
+  <div class="tools">
+    <span class="fict" title="Every customer, supplier, amount and message in this demo is invented">Demo · all data fictional</span>
+    <label class="tbtn" id="asbox" title="See the hub the way each teammate sees it">View as <select id="as" aria-label="View the hub as"><option>Lucas</option><option>Aidan</option><option>Keshav</option><option>Thiago</option></select></label>
+    <button class="tbtn" id="reset" type="button" title="Put the demo data back the way it started">Reset demo</button>
+    <button class="tbtn" id="present" type="button" aria-pressed="false" title="Hide the explanations for a clean recording (P)">Presenter mode</button>
+    <button class="tbtn" id="themeb" type="button" aria-label="Switch light or dark">◐</button>
+    <a class="tbtn" id="fullb" href="#" target="_blank" rel="noopener" hidden>Open full screen ↗</a>
+  </div>
+</header>
+
+<div class="rail-wrap"><nav class="rail" id="rail" aria-label="Stages"><div class="fill" id="fill"></div></nav></div>
+<div class="stats" id="stats" aria-live="polite"></div>
+
+<main class="main">
+  <section class="app" aria-label="Live demo">
+    <div class="apptabs" id="apptabs" role="tablist"></div>
+    <div class="frame" id="frame"></div>
+  </section>
+  <aside class="drawer" id="drawer" aria-label="What changed in this stage"></aside>
+</main>
+
+<script>
+const STAGES = [
+  {id:'before', name:'Before', wk:'Before week 1', dates:'Up to Aug 5, 2026',
+   stats:{agents:0, jobs:0, hub:0, skills:0, projects:0},
+   tabs:[['A Monday, by hand','before.html','Click the chores, watch the clock']],
+   title:'Everything by hand',
+   lead:'No operating system. Every order, invoice, comment and reorder went through a person, usually Lucas.',
+   changes:['Purchase orders arrived by email and got retyped into Shopify line by line.','Invoices and payment reminders were sent one at a time, when someone remembered.','Instagram comments waited until someone had a free minute.','Stock was checked by hand, so best sellers ran out.','Nobody could see what anyone else was working on.'],
+   tour:[['Click any card to do that job the old way and watch the clock.',null],['Do the PO email: that one task took about 25 minutes each time.',null],['Keep going until the day runs out. Nothing new got built.',null]],
+   next:'Week 1: Claude joins as an assistant.'},
+  {id:'v1', name:'V1 · The assistant', wk:'Weeks 1–9', dates:'Aug 6 – Oct 7',
+   stats:{agents:0, jobs:1, hub:0, skills:8, projects:13},
+   tabs:[['Claude Code','v1.html','Click a skill to run it']],
+   title:'An assistant that does the work when asked',
+   lead:'Claude Code with Mossify’s own projects, voice and skills. Lucas asks, it does the job in minutes. When he walks away, it stops.',
+   changes:['Skills for repeat jobs: copy in Mossify’s voice, SEO, blog posts, video edits, ops checks.','Learned Lucas’s writing voice from his sent email.','Gmail labeling ran on a schedule, the only thing that ran on its own.','Projects for freight, email marketing, the website redesign and lead gen.'],
+   tour:[['Click /copy-polish to rewrite a supplier email in Mossify’s voice.','skill:copy-polish'],['Click /ops reorder to see a stock check that used to take an hour.','skill:ops'],['Notice the banner: it only works while someone is at the keyboard.',null]],
+   next:'Week 10: agents start running on their own, and the team gets a hub.'},
+  {id:'v2', name:'V2 · Agents + Team Hub', wk:'Weeks 10–11', dates:'Oct 8 – Oct 21',
+   stats:{agents:6, jobs:20, hub:20, skills:14, projects:22},
+   tabs:[['Team Hub','hub-v2.html?look=classic','20 flat tabs, first version'],['Morning brief','brief.html?stage=v2','The first daily email']],
+   title:'First agents, and one shared page for the team',
+   lead:'A Mac mini runs the first agents around the clock. The whole team works from one hub with 20 tabs, and a brief lands in Lucas’s inbox every morning.',
+   changes:['Invoices email themselves when an order ships, with reminders before and after the due date.','Instagram agent answers comments in the brand voice and routes leads.','Ads agent watches Google Ads and suggests budget moves (shadow mode first).','Own CRM replaces HubSpot; email and Shopify orders sync in.','Team Hub: tasks, sales, AR, inventory, shipping, chat and shout-outs in one place.','7:30 AM morning brief: sales, ads, who owes us, what needs Lucas.'],
+   tour:[['Open Tasks to see every person’s work with steps and due dates.','go:tasks'],['Open Receivables: who owes us, by how late.','go:ar'],['Open the Morning brief tab: the first version.','tab:1']],
+   next:'Week 12: the hub is rebuilt and the agents get a control room.'},
+  {id:'now', name:'Now · The company OS', wk:'Weeks 12–14', dates:'Oct 22 – today',
+   stats:{agents:18, jobs:64, hub:32, skills:20, projects:38},
+   tabs:[['Team Hub','hub-now.html?look=climb','The team’s one page: 32 sections'],['Command Center','cc.html','Lucas’s live map of every agent'],['Morning brief','brief.html?stage=now','The 7:30 AM email']],
+   title:'A company that runs itself between check-ins',
+   lead:'18 agents and 64 scheduled jobs. POs become draft orders, stock reorders itself as PO drafts, freight gets quoted by every carrier at once, and broken jobs fix themselves.',
+   changes:['PO drop: a customer’s PO PDF becomes a Shopify draft order in about 2 minutes.','Purchasing agent ranks what to reorder and drafts the supplier PO.','Freight quoting: one request goes to every carrier on the lane, replies land in a compare table.','Command Center: every agent on one live map, with a Fix button.','Fix agent repairs broken jobs on its own, once a day, inside the ask-first rules.','Own review system, customs drawback tracker, team scorecards, alert emails within 10 minutes.'],
+   tour:[['Command Center: watch the live feed. Each event flies across the moss network.','tab:1'],['Press Fix on the red Etsy sync card and watch it repair itself.','tab:1'],['Back in the hub, open PO drop: where purchase orders become draft orders.','go:podrop'],['Open Freight → Quoting: three carrier quotes side by side.','go:quoting'],['Switch “View as” to Aidan: private sections disappear.','as:Aidan']],
+   next:'Next: the same system for other businesses, through Mossify AI.'}
+];
+const LABELS = {agents:'agents running', jobs:'scheduled jobs', hub:'hub sections', skills:'skills', projects:'projects'};
+const $ = id => document.getElementById(id);
+const seen = new Set();
+let cur = 0, tab = 0, tourAt = 0, asName = 'Lucas', shown = {agents:0,jobs:0,hub:0,skills:0,projects:0};
+const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+function buildRail(){
+  STAGES.forEach((s,i)=>{const b=document.createElement('button');b.className='step';b.type='button';b.dataset.i=i;
+    b.innerHTML=`<span class="dot"></span><span class="wk">${s.wk}</span><span class="nm">${s.name}</span><span class="dt">${s.dates}</span>`;
+    b.onclick=()=>setStage(i);$('rail').appendChild(b)});
+}
+function countTo(el,from,to){const t0=performance.now(),d=700;const f=t=>{const p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=Math.round(from+(to-from)*e);if(p<1)requestAnimationFrame(f)};
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)el.textContent=to;else requestAnimationFrame(f)}
+function renderStats(s,prev){
+  $('stats').innerHTML=Object.keys(LABELS).map(k=>{const d=s.stats[k]-(prev?prev.stats[k]:0);return `<div class="stat"><b data-k="${k}">${shown[k]}</b><span>${LABELS[k]}</span>${d>0&&prev?`<span class="up">+${d}</span>`:''}</div>`}).join('');
+  document.querySelectorAll('.stat b').forEach(b=>{const k=b.dataset.k;countTo(b,shown[k],s.stats[k]);shown[k]=s.stats[k]});
+}
+function setStage(i,keepTab){
+  const prev=STAGES[cur];cur=Math.max(0,Math.min(STAGES.length-1,i));const s=STAGES[cur];
+  document.querySelectorAll('.step').forEach((b,j)=>{b.classList.toggle('on',j===cur);b.classList.toggle('done',j<cur);b.setAttribute('aria-current',j===cur?'step':'false')});
+  const rail=$('rail').getBoundingClientRect(),dot=document.querySelectorAll('.step .dot')[cur].getBoundingClientRect();
+  $('fill').style.width=Math.max(0,dot.left-rail.left)+'px';
+  renderStats(s,prev===s?null:prev);
+  if(!keepTab)tab=0;tourAt=0;
+  renderTabs();renderDrawer();
+  $('asbox').hidden=!s.tabs.some(t=>t[1].startsWith('hub'));
+  if(location.hash!=='#'+s.id)history.replaceState(null,'','#'+s.id);
+  if(EMBED)$('fullb').href=location.pathname+'#'+s.id;
+}
+function renderTabs(){
+  const s=STAGES[cur];
+  seen.add(s.id+':'+tab);
+  const left=s.tabs.length-s.tabs.filter((t,i)=>seen.has(s.id+':'+i)).length;
+  $('apptabs').innerHTML=s.tabs.map((t,i)=>`<button class="apptab${seen.has(s.id+':'+i)?'':' unseen'}" role="tab" type="button" aria-selected="${i===tab}" data-i="${i}"><b>${t[0]}</b><small>${t[2]||''}</small></button>`).join('')+`<span class="hint">${left?left+' more to explore →':'Everything here is clickable'}</span>`;
+  $('apptabs').querySelectorAll('.apptab').forEach(b=>b.onclick=()=>{tab=+b.dataset.i;renderTabs()});
+  loadFrame();
+}
+const frames={};
+function srcFor(u){return u.startsWith('hub')?u+(u.includes('?')?'&':'?')+'as='+asName:u}
+function loadFrame(force){
+  const s=STAGES[cur],u=srcFor(s.tabs[tab][1]);
+  Object.values(frames).forEach(f=>f.hidden=true);
+  let f=frames[u];
+  if(f&&force){f.remove();delete frames[u];f=null}
+  if(!f){f=document.createElement('iframe');f.title=s.tabs[tab][0];f.className='loading';f.src=u;f.onload=()=>{f.classList.remove('loading');pushTheme(f)};$('frame').appendChild(f);frames[u]=f}
+  f.hidden=false;
+}
+function pushTheme(f){try{const t=document.documentElement.dataset.theme||'';const d=f.contentDocument.documentElement;if(t)d.dataset.theme=t;else delete d.dataset.theme}catch(e){}}
+function currentFrame(){return frames[srcFor(STAGES[cur].tabs[tab][1])]}
+function act(a){
+  if(!a)return;const [k,v]=a.split(':');
+  if(k==='tab'){tab=+v;renderTabs()}
+  else if(k==='go'){if(!STAGES[cur].tabs[tab][1].startsWith('hub')){tab=0;renderTabs()}
+    const f=currentFrame();const run=()=>{try{f.contentWindow.go(v)}catch(e){}};if(f.classList.contains('loading'))f.addEventListener('load',()=>setTimeout(run,900),{once:true});else run()}
+  else if(k==='as'){$('as').value=v;setAs(v)}
+  else if(k==='skill'){const f=currentFrame();try{f.contentWindow.runSkill(v)}catch(e){}}
+}
+function renderDrawer(){
+  const s=STAGES[cur],nx=STAGES[cur+1],steps=s.tour;
+  $('drawer').innerHTML=`<div><div class="eyebrow">${s.wk} · ${s.dates}</div><h2>${s.title}</h2></div><p>${s.lead}</p>
+   <div class="box"><div class="eyebrow">${cur?'What changed':'How it worked'}</div><ul>${s.changes.map(c=>`<li>${c}</li>`).join('')}</ul></div>
+   <div class="box tour"><div class="eyebrow">Guided tour</div><div class="q" id="tq"></div><div class="nav"><span id="tn"></span><button class="gbtn" type="button" id="tb">Back</button><button class="pbtn" type="button" id="tf">Show me</button></div></div>
+   <div class="try"><div class="eyebrow">Try this</div>${steps.map((t,i)=>`<button type="button" data-a="${t[1]||''}"><i>${i+1}</i><span>${t[0]}</span></button>`).join('')}</div>
+   <div class="next-stage">${nx?`<button class="pbtn" type="button" id="nx">Next: ${nx.name} →</button><p class="foot" style="margin-top:8px">${s.next}</p>`:`<p class="foot">${s.next}</p><button class="gbtn" type="button" id="nx0" style="margin-top:8px">Back to the start</button>`}</div>
+   <p class="foot">Keys: <span class="kbd">←</span> <span class="kbd">→</span> change stage · <span class="kbd">P</span> presenter mode. All customers, suppliers and amounts are invented.</p>`;
+  $('drawer').querySelectorAll('.try button').forEach(b=>b.onclick=()=>act(b.dataset.a));
+  if(nx)$('nx').onclick=()=>setStage(cur+1);else $('nx0').onclick=()=>setStage(0);
+  const paint=()=>{$('tq').textContent=steps[tourAt][0];$('tn').textContent=`Step ${tourAt+1} of ${steps.length}`;$('tb').disabled=tourAt===0;
+    $('tf').textContent=steps[tourAt][1]?'Show me':(tourAt<steps.length-1?'Next':'Done')};
+  $('tf').onclick=()=>{act(steps[tourAt][1]);if(tourAt<steps.length-1){tourAt++;setTimeout(paint,steps[tourAt-1][1]?300:0)}};
+  $('tb').onclick=()=>{if(tourAt>0){tourAt--;paint()}};paint();
+}
+function setAs(v){asName=v;Object.keys(frames).forEach(u=>{if(u.startsWith('hub')){frames[u].remove();delete frames[u]}});loadFrame()}
+$('as').onchange=e=>setAs(e.target.value);
+$('reset').onclick=()=>{Object.keys(frames).forEach(u=>{frames[u].remove();delete frames[u]});loadFrame()};
+function setPresent(on){document.body.classList.toggle('present',on);$('present').setAttribute('aria-pressed',on);store.set('demo-present',on?'1':'0')}
+$('present').onclick=()=>setPresent(!document.body.classList.contains('present'));
+$('themeb').onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;r.dataset.theme=dark?'light':'dark';store.set('demo-theme',r.dataset.theme);Object.values(frames).forEach(pushTheme)};
+addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('input,select,textarea'))return;if(e.key==='ArrowRight')setStage(cur+1);else if(e.key==='ArrowLeft')setStage(cur-1);else if(e.key==='p'||e.key==='P')setPresent(!document.body.classList.contains('present'))});
+// Deep links: #now, #now/1 (tab), #now/0/podrop (tab + hub section). Used by mossify.ai's "Try this" cards.
+function openHash(){const h=location.hash.slice(1).split('/');const i=STAGES.findIndex(s=>s.id===h[0]);if(i<0)return false;setStage(i);
+  if(h[1]!==undefined&&STAGES[i].tabs[+h[1]]){tab=+h[1];renderTabs()}if(h[2])act('go:'+h[2]);return true}
+addEventListener('hashchange',()=>{const h=location.hash.slice(1);const i=STAGES.findIndex(s=>s.id===h.split('/')[0]);if(i>=0&&(i!==cur||h.includes('/')))openHash()});
+const EMBED=/[?&]embed=1/.test(location.search), PUBLIC=/(github\.io|mossify\.ai)$/.test(location.hostname);
+if(EMBED){document.body.classList.add('embed');$('fullb').hidden=false}
+if(PUBLIC&&!EMBED)$('sitebar').hidden=false;
+addEventListener('resize',()=>setStage(cur,true));
+buildRail();
+{const t=store.get('demo-theme');if(t)document.documentElement.dataset.theme=t;if(store.get('demo-present')==='1')setPresent(true);
+ if(!openHash())setStage(0)}
+</script>
+</body>
+</html>

@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><script>window.DEMO_SNAPSHOT={"updated":"2026-11-06T14:30:00+00:00","nodes":[{"id":"po","name":"PO drop","area":"Sales","icon":"clipboard","sys":["shopify","hub"],"status":"ok","note":"","lastRun":"2026-11-06T13:32:00+00:00","actionsToday":3,"actions7d":122,"spark":[12,2,4,17,2,5,11,27,5,11,29,25,22,3],"cost7":1.5,"lastEvent":"","health7":95,"jobs":[{"id":"po-intake","name":"PO drop (hub)","what":"Checks the hub PO drop every 30 min, 8:30 AM to 5 PM weekdays, and turns new POs into draft orders on Wholesale CA/US","schedule":"every 30 min","status":"ok","note":"","lastRun":"2026-11-06T13:35:00+00:00","running":false,"why":null,"advice":null},{"id":"po-mail","name":"PO drop (email)","what":"POs forwarded to po@demo.mossify become draft orders within ~2 min; AI runs only when one arrives","schedule":"every 15 min","status":"ok","note":"","lastRun":"2026-11-06T13:56:00+00:00","running":false,"why":null,"advice":null},{"id":"po-track","name":"PO status tracker","what":"3x a day checks each hub PO in Shopify: entered, on hold, released, shipped, delivered; AI only to write changes","schedule":"hourly","status":"ok","note":"","lastRun":"2026-11-06T13:50:00+00:00","running":false,"why":null,"advice":null}]},{"id":"crm","name":"CRM","area":"Sales","icon":"users","sys":["gmail","shopify","crm"],"status":"ok","note":"","lastRun":"2026-11-06T14:28:00+00:00","actionsToday":4,"actions7d":100,"spark":[6,24,3,3,7,12,10,13,26,25,12,5,15,4],"cost7":0,"lastEvent":"","health7":98,"jobs":[{"id":"crm-server","name":"CRM app","what":"The CRM web app (:8790)","schedule":"always on","status":"ok","note":"","lastRun":"2026-11-06T13:54:00+00:00","running":false,"why":null,"advice":null},{"id":"crm-gmail","name":"CRM Gmail sync","what":"Pulls the team inboxes email into the CRM","schedule":"every 30 min","status":"ok","note":"","lastRun":"2026-11-06T14:01:00+00:00","running":false,"why":null,"advice":null},{"id":"crm-shopify","name":"CRM Shopify sync","what":"Pulls wholesale orders into the CRM","schedule":"every 15 min","status":"ok","note":"","lastRun":"2026-11-06T14:19:00+00:00","running":false,"why":null,"advice":null},{"id":"crm-offsite","name":"CRM backup","what":"Nightly encrypted off-site backup of the CRM","schedule":"Mon 9:00 AM","status":"ok","note":"","lastRun":"2026-11-06T13:36:00+00:00","running":false,"why":null,"advice":null}]},{"id":"deal","name":"Deal follow-up","area":"Sales","icon":"mail","sys":["crm","gmail"],"status":"ok","note":"","lastRun":"2026-11-06T13:31:00+00:00","actionsToday":13,"actions7d":108,"spark":[19,29,22,25,21,27,24,22,10,20,23,3,17,13],"cost7":0.5,"lastEvent":"","health7":95,"jobs":[{"id":"deal-followup","name":"Deal follow-up","what":"Monday email of quiet deals to chase","schedule":"Mon 8:00 AM","status":"ok","note":"","lastRun":"2026-11-06T13:39:00+00:00","running":false,"why":null,"advice":null},{"id":"wholesale-emails","name":"Wholesale emails","what":"Wholesale store notification emails","schedule":"Mon 9:00 AM","status":"ok","note":"","lastRun":"2026-11-06T13:04:00+00:00","running":false,"why":null,"advice":null}]},{"id":"freight","name":"Freight quotes","area":"Sales","icon":"truck","sys":["gmail","hub"],"status":"ok","note":"","lastRun":"2026-11-06T13:52:00+00:00","actionsToday":6,"actions7d":96,"spark":[27,2,9,17,24,21,15,11,8,15,14,28,14,6],"cost7":1.09,"lastEvent":"","health7":94,"jobs":[{"id":"freight-gw","name":"Freight RFQ tools","what":"Keshav's AI checks RFQs and saves them as hub drafts (:8799); Keshav presses Send","schedule":"always on","status":"ok","note":"","lastRun":"2026-11-06T13:08:00+00:00","running":false,"why":null,"advice":null}]},{"id":"ar","name":"Invoices + reminders","area":"Finance","icon":"receipt","sys":["shopify","gmail"],"status":"ok","note":"","lastRun":"2026-11-06T14:10:00+00:00","actionsToday":12,"actions7d":131,"spark":[30,18,21,30,2,21,29,19,23,22,18,26,11,12],"cost7":0,"lastEvent":"","health7":95,"jobs":[{"id":"ar-auto","name":"Invoices + reminders","what":"Emails invoices on fulfillment and payment reminders","schedule":"every 15 min","status":"ok","note":"","lastRun":"2026-11-06T13:39:00+00:00","running":false,"why":null,"advice":null},{"id":"ar-dashboard","name":"AR dashboard","what":"Receivables dashboard (:8787)","schedule":"always on","status":"ok","note":"","lastRun":"2026-11-06T14:21:00+00:00","running":false,"why":null,"advice":null}]},{"id":"net","name":"Net terms sync","area":"Finance","icon":"clock","sys":["shopify"],"status":"ok","note":"","lastRun":"2026-11-06T14:01:00+00:00","actionsToday":16,"actions7d":125,"spark":[21,10,3,14,29,5,2,21,20,24,13,21,10,16],"cost7":0,"lastEvent":"","health7":96,"jobs":[{"id":"net-terms-sync","name":"Net terms sync","what":"Starts net terms at the ship date","schedule":"daily 6:00 AM","status":"ok","note":"","lastRun":"2026-11-06T14:27:00+00:00","running":false,"why":null,"advice":null}]},{"id":"ap","name":"A/P + unpaid watch","area":"Finance","icon":"file","sys":["qbo","gmail"],"status":"ok","note":"","lastRun":"2026-11-06T13:50:00+00:00","actionsToday":7,"actions7d":91,"spark":[22,18,23,9,17,2,6,2,21,10,29,17,5,7],"cost7":0,"lastEvent":"","health7":96,"jobs":[{"id":"ap-aging-month-end","name":"Month-end A/P aging","what":"Drafts the A/P aging for the bookkeeper at month end","schedule":"weekdays 9:35 AM","status":"ok","note":"","lastRun":"2026-11-06T13:54:00+00:00","running":false,"why":null,"advice":null},{"id":"collective-unpaid-watch","name":"Collective unpaid watch","what":"Flags unpaid Collective orders","schedule":"daily 7:05 AM","status":"ok","note":"","lastRun":"2026-11-06T13:06:00+00:00","running":false,"why":null,"advice":null}]},{"id":"ads","name":"Ads agent","area":"Marketing","icon":"megaphone","sys":["gads"],"status":"ok","note":"","lastRun":"2026-11-06T13:32:00+00:00","actionsToday":29,"actions7d":171,"spark":[6,14,27,21,7,4,23,24,23,26,24,16,29,29],"cost7":0.93,"lastEvent":"","health7":97,"jobs":[{"id":"ads-agent","name":"Ads agent","what":"Moves Google Ads budgets ±20%/day inside the guard (shadow first)","schedule":"daily 9:00 AM","status":"ok","note":"","lastRun":"2026-11-06T14:17:00+00:00","running":false,"why":null,"advice":null},{"id":"ads-health-check","name":"Ads health check","what":"Weekly check of ads, feeds and tracking","schedule":"hourly","status":"ok","note":"","lastRun":"2026-11-06T13:00:00+00:00","running":false,"why":null,"advice":null}]},{"id":"creative","name":"Weekly ad cuts","area":"Marketing","icon":"film","sys":["meta","hub"],"status":"ok","note":"","lastRun":"2026-11-06T14:15:00+00:00","actionsToday":15,"actions7d":125,"spark":[30,14,7,24,18,30,2,4,12,20,22,28,24,15],"cost7":0.77,"lastEvent":"","health7":100,"jobs":[{"id":"weekly-creative","name":"Weekly ad cuts","what":"Makes 12 new ads (6 video + 6 static) for review","schedule":"Mon 8:00 AM","status":"ok","note":"","lastRun":"2026-11-06T13:37:00+00:00","running":false,"why":null,"advice":null}]},{"id":"klav","name":"Email + conversion","area":"Marketing","icon":"shield","sys":["klaviyo","shopify"],"status":"warn","note":"DTC conversion check: Missed its schedule","lastRun":"2026-11-06T14:15:00+00:00","actionsToday":3,"actions7d":140,"spark":[23,15,20,3,29,29,22,29,16,22,27,20,23,3],"cost7":0,"lastEvent":"","health7":88,"jobs":[{"id":"klaviyo-bot-suppression","name":"Klaviyo bot cleanup","what":"Suppresses bot sign-ups in Klaviyo","schedule":"Mon 9:00 AM","status":"ok","note":"","lastRun":"2026-11-06T14:01:00+00:00","running":false,"why":null,"advice":null},{"id":"conversion-weekly","name":"DTC conversion check","what":"Weekly mossify.ca conversion email","schedule":"every 15 min","status":"warn","note":"Missed its schedule","lastRun":"2026-11-06T13:22:00+00:00","running":false,"why":"The Mac mini was busy with a backup at 2 AM, so this ran 40 minutes late.","advice":"Nothing to do, it caught up on its own."},{"id":"sale-watch","name":"Sale watch","what":"Watches live sales and promos","schedule":"Mon 9:00 AM","status":"ok","note":"","lastRun":"2026-11-06T14:28:00+00:00","running":false,"why":null,"advice":null}]},{"id":"ig","name":"Instagram agent","area":"Social","icon":"camera","sys":["meta"],"status":"ok","note":"","lastRun":"2026-11-06T14:05:00+00:00","actionsToday":24,"actions7d":153,"spark":[4,21,27,13,20,22,11,28,12,16,27,18,28,24],"cost7":1.42,"lastEvent":"","health7":99,"jobs":[{"id":"ig-agent","name":"Instagram agent","what":"Triages and answers Instagram comments","schedule":"every 20 min","status":"ok","note":"","lastRun":"2026-11-06T14:00:00+00:00","running":false,"why":null,"advice":null},{"id":"ig-digest","name":"Instagram digest","what":"4 PM digest of comments for Thiago","schedule":"hourly","status":"ok","note":"","lastRun":"2026-11-06T14:22:00+00:00","running":false,"why":null,"advice":null}]},{"id":"etsy","name":"Etsy sync","area":"Store","icon":"tag","sys":["etsy","shopify"],"status":"fail","note":"Etsy sync: Last run exited with code 1","lastRun":"2026-11-06T14:20:00+00:00","actionsToday":19,"actions7d":102,"spark":[20,3,14,9,28,14,3,4,13,24,10,4,28,19],"cost7":0,"lastEvent":"","health7":82,"jobs":[{"id":"etsy-sync","name":"Etsy sync","what":"Keeps Etsy listings and stock in sync","schedule":"every 30 min","status":"fail","note":"Last run exited with code 1","lastRun":"2026-11-06T13:40:00+00:00","running":false,"why":"The Etsy API timed out twice in a row, so this run stopped before syncing stock.","advice":"Run it again; if it fails twice more, check the Etsy API status page."}]},{"id":"store","name":"Store upkeep","area":"Store","icon":"box","sys":["shopify"],"status":"ok","note":"","lastRun":"2026-11-06T14:21:00+00:00","actionsToday":23,"actions7d":146,"spark":[4,20,21,26,25,15,21,20,27,5,29,23,19,23],"cost7":0,"lastEvent":"","health7":96,"jobs":[{"id":"soldout-to-bottom","name":"Sold-out to bottom","what":"Moves sold-out products to the end of collections","schedule":"weekdays 9:35 AM","status":"ok","note":"","lastRun":"2026-11-06T14:00:00+00:00","running":false,"why":null,"advice":null},{"id":"reviews","name":"Reviews upkeep","what":"Daily: publishes 1★/2★ reviews when their 14-day hold ends, sends review requests, refreshes the Google review feed","schedule":"hourly","status":"ok","note":"","lastRun":"2026-11-06T13:36:00+00:00","running":false,"why":null,"advice":null},{"id":"reviews-admin","name":"Reviews admin","what":"Approve / reply / remove reviews (:8798, PIN login)","schedule":"always on","status":"ok","note":"","lastRun":"2026-11-06T13:47:00+00:00","running":false,"why":null,"advice":null},{"id":"code-rules-sync","name":"Discount code rules","what":"Keeps discount code rules in sync","schedule":"daily 7:05 AM","status":"ok","note":"","lastRun":"2026-11-06T13:03:00+00:00","running":false,"why":null,"advice":null}]},{"id":"cos","name":"Chief of staff","area":"Team","icon":"compass","sys":["hub","gmail"],"status":"ok","note":"","lastRun":"2026-11-06T13:53:00+00:00","actionsToday":14,"actions7d":120,"spark":[11,10,22,29,27,23,19,22,6,21,20,25,12,14],"cost7":1.86,"lastEvent":"","health7":97,"jobs":[{"id":"chief-of-staff","name":"Chief of staff","what":"2:30 AM checks on every agent; Mondays ranks ideas to grow the business","schedule":"daily 2:30 AM","status":"ok","note":"","lastRun":"2026-11-06T14:27:00+00:00","running":false,"why":null,"advice":null},{"id":"alert-watch","name":"Alert watch","what":"Every 5 min checks the stores, the mini's servers and the critical agents; emails Lucas when something is down and puts a red bar on the hub","schedule":"every 5 min","status":"ok","note":"","lastRun":"2026-11-06T13:05:00+00:00","running":false,"why":null,"advice":null}]},{"id":"jobs","name":"Email jobs","area":"Team","icon":"inbox","sys":["gmail"],"status":"ok","note":"","lastRun":"2026-11-06T13:40:00+00:00","actionsToday":22,"actions7d":117,"spark":[5,5,19,3,28,17,3,21,15,19,12,12,16,22],"cost7":1.21,"lastEvent":"","health7":97,"jobs":[{"id":"email-jobs","name":"Email jobs","what":"Runs jobs emailed to the OS","schedule":"every 5 min","status":"ok","note":"","lastRun":"2026-11-06T14:00:00+00:00","running":false,"why":null,"advice":null},{"id":"email-labeling","name":"Inbox labeling","what":"Labels and tidies the inbox","schedule":"every 10 min","status":"ok","note":"","lastRun":"2026-11-06T14:02:00+00:00","running":false,"why":null,"advice":null}]},{"id":"hub","name":"Hub + data","area":"Team","icon":"refresh","sys":["hub","shopify","gads"],"status":"ok","note":"","lastRun":"2026-11-06T14:00:00+00:00","actionsToday":26,"actions7d":165,"spark":[11,9,25,5,27,7,23,21,16,18,26,29,29,26],"cost7":0,"lastEvent":"","health7":94,"jobs":[{"id":"hub-sync","name":"Hub data refresh","what":"Loads sales, stock, AR, CRM, ads, late-to-ship orders and this table into the hub 3x a day; emails Keshav late orders at 7:15 AM","schedule":"3x a day","status":"ok","note":"","lastRun":"2026-11-06T14:27:00+00:00","running":false,"why":null,"advice":null},{"id":"shopify-ro","name":"Team read-only Shopify","what":"Read-only Shopify access for the team's AI","schedule":"always on","status":"ok","note":"","lastRun":"2026-11-06T13:35:00+00:00","running":false,"why":null,"advice":null},{"id":"command-center","name":"Command Center","what":"Lucas's private live dashboard (:8792)","schedule":"always on","status":"ok","note":"","lastRun":"2026-11-06T13:42:00+00:00","running":false,"why":null,"advice":null},{"id":"cc-collect","name":"Command Center data","what":"Collects agent health, activity and business numbers every 2 minutes","schedule":"every 2 min","status":"ok","note":"","lastRun":"2026-11-06T13:27:00+00:00","running":false,"why":null,"advice":null},{"id":"remote-control","name":"Phone control","what":"Lets Lucas run full Claude Code sessions on the mini from the Claude app","schedule":"always on","status":"ok","note":"","lastRun":"2026-11-06T13:20:00+00:00","running":false,"why":null,"advice":null}]},{"id":"brief","name":"Morning brief","area":"Team","icon":"sun","sys":["gmail"],"status":"ok","note":"","lastRun":"2026-11-06T13:58:00+00:00","actionsToday":18,"actions7d":128,"spark":[18,30,15,13,8,18,12,29,6,15,5,26,29,18],"cost7":1.52,"lastEvent":"","health7":99,"jobs":[{"id":"morning-brief","name":"Morning brief","what":"7:30 AM email to Lucas: what needs him, sales, ads, AR, stock, agents","schedule":"daily 7:30 AM","status":"ok","note":"","lastRun":"2026-11-06T13:15:00+00:00","running":false,"why":null,"advice":null}]},{"id":"team","name":"Team coach","area":"Team","icon":"users","sys":["hub","crm"],"status":"ok","note":"","lastRun":"2026-11-06T13:48:00+00:00","actionsToday":25,"actions7d":120,"spark":[7,29,10,21,22,2,13,3,5,28,9,20,30,25],"cost7":0,"lastEvent":"","health7":100,"jobs":[{"id":"team-coach","name":"Team coach","what":"Mondays 6:45 AM: Lucas's private team notes (Command Center Team view + brief)","schedule":"Mon 6:45 AM","status":"ok","note":"","lastRun":"2026-11-06T13:38:00+00:00","running":false,"why":null,"advice":null}]}],"backOffice":[{"id":"crm-reorder","name":"Reorder agent","area":"Sales","status":"ok","note":"","lastRun":"2026-11-06T09:57:00+00:00","why":null,"advice":null},{"id":"crm-outreach","name":"Wholesale outreach","area":"Sales","status":"ok","note":"","lastRun":"2026-11-06T10:39:00+00:00","why":null,"advice":null},{"id":"guide-watch","name":"Moss Guide watch","area":"Sales","status":"ok","note":"","lastRun":"2026-11-06T11:28:00+00:00","why":null,"advice":null},{"id":"front-desk","name":"AI front desk","area":"Sales","status":"ok","note":"","lastRun":"2026-11-06T13:17:00+00:00","why":null,"advice":null},{"id":"sps-mail","name":"SPS Commerce watch","area":"Sales","status":"ok","note":"","lastRun":"2026-11-06T11:18:00+00:00","why":null,"advice":null},{"id":"rangeme-mail","name":"RangeMe tracker","area":"Sales","status":"ok","note":"","lastRun":"2026-11-06T14:03:00+00:00","why":null,"advice":null},{"id":"po-agent","name":"Purchasing agent","area":"Operations","status":"ok","note":"","lastRun":"2026-11-06T11:30:00+00:00","why":null,"advice":null},{"id":"hub-ar-watch","name":"Hub AR watch","area":"Finance","status":"ok","note":"","lastRun":"2026-11-06T11:55:00+00:00","why":null,"advice":null},{"id":"influencer-day","name":"Influencer of the day","area":"Marketing","status":"ok","note":"","lastRun":"2026-11-06T09:32:00+00:00","why":null,"advice":null},{"id":"competitor-ads","name":"Competitor ad watch","area":"Marketing","status":"ok","note":"","lastRun":"2026-11-06T12:49:00+00:00","why":null,"advice":null},{"id":"ads-judge","name":"Ad test judge","area":"Marketing","status":"ok","note":"","lastRun":"2026-11-06T13:04:00+00:00","why":null,"advice":null},{"id":"ad-launch","name":"Ad launcher","area":"Marketing","status":"ok","note":"","lastRun":"2026-11-06T09:46:00+00:00","why":null,"advice":null},{"id":"app-approve","name":"Application approver","area":"Sales","status":"ok","note":"","lastRun":"2026-11-06T11:51:00+00:00","why":null,"advice":null},{"id":"sync-now","name":"Sync now","area":"Operations","status":"ok","note":"","lastRun":"2026-11-06T14:04:00+00:00","why":null,"advice":null},{"id":"crm-flow","name":"CRM wholesale flow","area":"Sales","status":"ok","note":"","lastRun":"2026-11-06T11:59:00+00:00","why":null,"advice":null},{"id":"inventory-report","name":"Monthly inventory report","area":"Finance","status":"ok","note":"","lastRun":"2026-11-06T10:22:00+00:00","why":null,"advice":null},{"id":"market-watch","name":"Market watch","area":"Team","status":"ok","note":"","lastRun":"2026-11-06T10:01:00+00:00","why":null,"advice":null}],"systems":{"shopify":{"name":"Shopify","icon":"bag"},"gmail":{"name":"Gmail","icon":"mail"},"gads":{"name":"Google Ads","icon":"target"},"meta":{"name":"Meta","icon":"meta"},"klaviyo":{"name":"Klaviyo","icon":"flag"},"etsy":{"name":"Etsy","icon":"store"},"qbo":{"name":"QuickBooks","icon":"dollar"},"hub":{"name":"Team Hub","icon":"grid"},"crm":{"name":"CRM","icon":"users"}},"counts":{"ok":16,"warn":1,"fail":1,"idle":0},"jobsTotal":56,"feed":[{"id":"f000","ts":1793975280.0,"node":"ig","text":"Replied to a comment · question","sys":"meta","out":"ok","src":"ig","detail":{"Comment":"Does the moss pole work for a monstera adansonii?","Reply":"It does! The 30\" is perfect for adansonii, just mist the moss every few days so the roots grab on 🌿","Why":"Product question with a clear answer, level 2 → reply in the brand voice.","Level":"2","Mode":"live","link":"#demo"}},{"id":"f001","ts":1793974860.0,"node":"ig","text":"Hid a spam comment","sys":"meta","out":"ok","src":"ig","detail":{"Comment":"DM me to grow your page 🔥🔥","Why":"Matches the spam pattern list.","Level":"1","link":"#demo"}},{"id":"f002","ts":1793974440.0,"node":"ar","text":"Invoice sent · #W14820","sys":"gmail","out":"ok","src":"ar","detail":{"Order":"#W14820","Customer":"Maple Row Garden Centre","Type":"invoice","Store":"Wholesale CA","Sent to":"AP contact","Open amount":"CAD 1,284.50","Automatic":"yes","link":"#demo"}},{"id":"f003","ts":1793974020.0,"node":"ar","text":"Reminder sent · due in 5 days · #USA13980","sys":"gmail","out":"ok","src":"ar","detail":{"Order":"#USA13980","Customer":"Greenleaf Pet & Garden","Type":"reminder −5","Store":"Wholesale US","Open amount":"USD 612.00","link":"#demo"}},{"id":"f004","ts":1793973600.0,"node":"po","text":"PO turned into a draft order → #D2208","sys":"shopify","out":"ok","src":"po","detail":{"Document":"PO-448120.pdf","Status":"drafted","Store":"Wholesale CA","Draft order":"#D2208","link":"#demo"}},{"id":"f005","ts":1793973180.0,"node":"net","text":"Net terms reset on #W14791 · due 2026-12-06","sys":"shopify","out":"ok","src":"net","detail":{"Order":"#W14791","Terms":"Net 30","Shipped":"2026-11-06","New due date":"2026-12-06","link":"#demo"}},{"id":"f006","ts":1793972760.0,"node":"ads","text":"Budget +20% · Shopping · all products (4.8x)","sys":"gads","out":"ok","src":"ledger","detail":{"Campaign":"Shopping · all products","From":"$40/day","To":"$48/day","Why":"ROAS 4.8x for 7 days, above the 4.0x target.","link":"#demo"}},{"id":"f007","ts":1793972340.0,"node":"creative","text":"Made 12 new ad cuts for review","sys":"hub","out":"ok","src":"run","detail":{}},{"id":"f008","ts":1793971920.0,"node":"crm","text":"Synced 38 emails into accounts","sys":"crm","out":"ok","src":"run","detail":{}},{"id":"f009","ts":1793971500.0,"node":"deal","text":"Drafted 4 follow-ups for quiet deals","sys":"gmail","out":"ok","src":"ledger","detail":{"Why":"Deals over $1k with no reply in 14 days.","link":"#demo"}},{"id":"f010","ts":1793971080.0,"node":"freight","text":"RFQ-2026-014 sent to 3 carriers","sys":"gmail","out":"ok","src":"ledger","detail":{}},{"id":"f011","ts":1793970660.0,"node":"freight","text":"Quote read: Maple Leaf Freight CAD 1,227","sys":"gmail","out":"ok","src":"ledger","detail":{}},{"id":"f012","ts":1793970240.0,"node":"etsy","text":"Stock sync failed (Etsy API timeout)","sys":"etsy","out":"fail","src":"jobs","detail":{"Error":"Timeout after 30s","link":"#demo"}},{"id":"f013","ts":1793969820.0,"node":"store","text":"Published 3 new 5★ reviews","sys":"shopify","out":"ok","src":"run","detail":{}},{"id":"f014","ts":1793969400.0,"node":"cos","text":"Nightly check: 0 issues, 2 safe fixes applied","sys":"hub","out":"ok","src":"run","detail":{}},{"id":"f015","ts":1793968980.0,"node":"jobs","text":"Job finished: \"Pull last month’s top 10 SKUs by margin\"","sys":"gmail","out":"ok","src":"jobs","detail":{"Subject":"Top 10 SKUs by margin","Took":"3 min","link":"#demo"}},{"id":"f016","ts":1793968560.0,"node":"brief","text":"Morning brief sent","sys":"gmail","out":"ok","src":"run","detail":{}},{"id":"f017","ts":1793968140.0,"node":"klav","text":"Suppressed 14 bot sign-ups","sys":"klaviyo","out":"ok","src":"run","detail":{}},{"id":"f018","ts":1793967720.0,"node":"hub","text":"Hub data refreshed","sys":"hub","out":"ok","src":"run","detail":{}},{"id":"f019","ts":1793967300.0,"node":"ap","text":"Flagged 1 unpaid marketplace order","sys":"qbo","out":"warn","src":"ledger","detail":{}},{"id":"f020","ts":1793966880.0,"node":"ig","text":"Replied to a comment · question","sys":"meta","out":"ok","src":"ig","detail":{"Comment":"Does the moss pole work for a monstera adansonii?","Reply":"It does! The 30\" is perfect for adansonii, just mist the moss every few days so the roots grab on 🌿","Why":"Product question with a clear answer, level 2 → reply in the brand voice.","Level":"2","Mode":"live","link":"#demo"}},{"id":"f021","ts":1793966460.0,"node":"ig","text":"Hid a spam comment","sys":"meta","out":"ok","src":"ig","detail":{"Comment":"DM me to grow your page 🔥🔥","Why":"Matches the spam pattern list.","Level":"1","link":"#demo"}},{"id":"f022","ts":1793966040.0,"node":"ar","text":"Invoice sent · #W14820","sys":"gmail","out":"ok","src":"ar","detail":{"Order":"#W14820","Customer":"Maple Row Garden Centre","Type":"invoice","Store":"Wholesale CA","Sent to":"AP contact","Open amount":"CAD 1,284.50","Automatic":"yes","link":"#demo"}},{"id":"f023","ts":1793965620.0,"node":"ar","text":"Reminder sent · due in 5 days · #USA13980","sys":"gmail","out":"ok","src":"ar","detail":{"Order":"#USA13980","Customer":"Greenleaf Pet & Garden","Type":"reminder −5","Store":"Wholesale US","Open amount":"USD 612.00","link":"#demo"}},{"id":"f024","ts":1793965200.0,"node":"po","text":"PO turned into a draft order → #D2208","sys":"shopify","out":"ok","src":"po","detail":{"Document":"PO-448120.pdf","Status":"drafted","Store":"Wholesale CA","Draft order":"#D2208","link":"#demo"}},{"id":"f025","ts":1793964780.0,"node":"net","text":"Net terms reset on #W14791 · due 2026-12-06","sys":"shopify","out":"ok","src":"net","detail":{"Order":"#W14791","Terms":"Net 30","Shipped":"2026-11-06","New due date":"2026-12-06","link":"#demo"}},{"id":"f026","ts":1793964360.0,"node":"ads","text":"Budget +20% · Shopping · all products (4.8x)","sys":"gads","out":"ok","src":"ledger","detail":{"Campaign":"Shopping · all products","From":"$40/day","To":"$48/day","Why":"ROAS 4.8x for 7 days, above the 4.0x target.","link":"#demo"}},{"id":"f027","ts":1793963940.0,"node":"creative","text":"Made 12 new ad cuts for review","sys":"hub","out":"ok","src":"run","detail":{}},{"id":"f028","ts":1793963520.0,"node":"crm","text":"Synced 38 emails into accounts","sys":"crm","out":"ok","src":"run","detail":{}},{"id":"f029","ts":1793963100.0,"node":"deal","text":"Drafted 4 follow-ups for quiet deals","sys":"gmail","out":"ok","src":"ledger","detail":{"Why":"Deals over $1k with no reply in 14 days.","link":"#demo"}},{"id":"f030","ts":1793962680.0,"node":"freight","text":"RFQ-2026-014 sent to 3 carriers","sys":"gmail","out":"ok","src":"ledger","detail":{}},{"id":"f031","ts":1793962260.0,"node":"freight","text":"Quote read: Maple Leaf Freight CAD 1,227","sys":"gmail","out":"ok","src":"ledger","detail":{}},{"id":"f032","ts":1793961840.0,"node":"etsy","text":"Stock sync failed (Etsy API timeout)","sys":"etsy","out":"fail","src":"jobs","detail":{"Error":"Timeout after 30s","link":"#demo"}},{"id":"f033","ts":1793961420.0,"node":"store","text":"Published 3 new 5★ reviews","sys":"shopify","out":"ok","src":"run","detail":{}},{"id":"f034","ts":1793961000.0,"node":"cos","text":"Nightly check: 0 issues, 2 safe fixes applied","sys":"hub","out":"ok","src":"run","detail":{}},{"id":"f035","ts":1793960580.0,"node":"jobs","text":"Job finished: \"Pull last month’s top 10 SKUs by margin\"","sys":"gmail","out":"ok","src":"jobs","detail":{"Subject":"Top 10 SKUs by margin","Took":"3 min","link":"#demo"}}],"actionsToday":279,"ai":{"today":1.84,"week":11.2,"byNode":{"po":1.5,"deal":0.5,"freight":1.09,"ads":0.93,"creative":0.77,"ig":1.42,"cos":1.86,"jobs":1.21,"brief":1.52},"sessionsToday":9,"sessionsWeek":58,"sessionsByNode":{},"limitHits":0,"paused":null},"pulse":{"today":{"mossify.ca":[14,1186.4],"Wholesale CA":[3,2410.0],"Wholesale US":[2,1320.75]},"yesterday":{"total":2490,"lastweek":2210,"byStore":{"mossify.ca":[31,1520.1],"Wholesale CA":[2,640.0],"Wholesale US":[1,329.9]},"trend":[["2026-10-31",2140],["2026-11-01",2610],["2026-11-02",1980],["2026-11-03",3320],["2026-11-04",2875],["2026-11-05",3010],["2026-11-06",2490]]},"adsYesterday":{"Google Ads":{"spend":84.1,"value":401.2},"Meta Ads":{"spend":62.4,"value":219.8}},"ads7":{"spend":1012.5,"value":4150.3,"roas":4.1,"asOf":"2026-11-05","byChannel":{"Google Ads":4.8,"Meta Ads":3.3,"Shop Campaigns":5.1}},"ar":{"outstanding":41820,"overdue":9640,"over60":2210,"accounts60":2,"asOf":"2026-11-06"},"stock":{"out":1,"urgent":4,"top":[{"name":"Bendable Moss Pole 30\"","sku":"BMPTN-3016","perDay":18.2},{"name":"Sphagnum Moss 150g","sku":"SPHAG-N-0002","perDay":11.6},{"name":"Coir Pole 16\"","sku":"BCP-0016","perDay":9.1}]},"inbox":{"unread":37,"drafts":6},"calendar":[{"time":"10:00 AM","title":"Weekly numbers (30 min)"},{"time":"1:30 PM","title":"Call with a garden-centre buyer"},{"time":"4:00 PM","title":"Ad creative review"}],"etsyMonth":1840},"needs":[{"icon":"alert","tone":"fail","title":"Agent failing: Etsy sync","detail":"Stock sync stopped after two API timeouts. One click to retry.","node":"etsy","link":"#demo","linkLabel":"Open the log","items":[{"text":"Etsy sync","sub":"Last run exited with code 1","job":"etsy-sync"}],"scrapped":[]},{"icon":"clipboard","tone":"warn","title":"2 POs need review","detail":"Matched to products; one line has an unusual price. Check, then send to Shopify.","node":"po","link":"#demo","linkLabel":"Open PO drop","items":[{"text":"PO-448120 · Fernhollow Garden Co.","sub":"14 lines · CAD 3,240","link":"#demo","key":"po:1"},{"text":"PO-448131 · Tall Pines Nursery","sub":"6 lines · CAD 980","link":"#demo","key":"po:2"}],"scrapped":[]},{"icon":"spark","tone":"ok","title":"3 ideas from the chief of staff","detail":"Ranked by impact this week. Start one and the plan comes back by email first.","node":"cos","link":"#demo","linkLabel":"All ideas","items":[{"text":"Auto-send the spring preorder reminder to accounts that opened but didn’t order","sub":"Grow · ~$4k/mo · 1 day to build","idea":"W45-1","key":"idea:W45-1"},{"text":"Merge the two inventory alerts into one daily line","sub":"Prune · saves 10 min/day","idea":"W45-2","key":"idea:W45-2"},{"text":"Add a “reorder in one click” link to every invoice email","sub":"Grow · ~$2k/mo","idea":"W45-3","key":"idea:W45-3"}],"scrapped":[]}],"nightly":{"date":"2026-11-06","needsLucas":0,"safeFixes":2},"emailJobs":{"waitingOnGo":0,"ran24h":3,"errors24h":0},"flow":{"channels":[{"id":"dtc","name":"DTC · mossify.ca","icon":"bag","value":1186,"label":"$1,186 today"},{"id":"wca","name":"Wholesale CA","icon":"box","value":2410,"label":"$2,410 today"},{"id":"wus","name":"Wholesale US","icon":"truck","value":1321,"label":"$1,321 today"},{"id":"etsy","name":"Etsy","icon":"store","value":210,"label":"$210 today"},{"id":"igc","name":"Instagram","icon":"camera","value":140,"label":"140 comments 7d","count":140}],"agents":["ads","po","ar","crm","ig","etsy","store"],"results":[{"id":"orders","name":"Orders today","icon":"cart","value":19},{"id":"cash","name":"Invoices + reminders 7d","icon":"dollar","value":46},{"id":"roas","name":"Ad return 7d","icon":"target","value":4.1,"fmt":"x"},{"id":"leads","name":"Leads routed 7d","icon":"sprout","value":23},{"id":"conv","name":"Comments handled 7d","icon":"chat","value":131}],"links":[["dtc","ads"],["dtc","store"],["wca","po"],["wca","ar"],["wca","crm"],["wus","po"],["wus","ar"],["wus","crm"],["etsy","etsy"],["igc","ig"],["igc","ads"]],"outs":[["ads","orders"],["ads","roas"],["po","orders"],["ar","cash"],["crm","leads"],["ig","leads"],["ig","conv"],["etsy","orders"],["store","orders"]]},"team":{"updated":"2026-11-06T14:30:00+00:00","asOf":"2026-11-06","pullAgeDays":0,"waiting":2,"oldest":2,"warnings":[],"people":[{"name":"Aidan","role":"Head of Sales","color":"#d97a63","focus":"Win back lapsed accounts, spring preorders","targets":[["Won back","$50k by 01/2027"],["Lead reply","under 1 business day"]],"metrics":[{"id":"wb","label":"Won back (YTD)","value":31200,"shown":"$31.2k","status":"good","target":"$50k by 01/2027","sub":"on track","link":null,"better":"up","tip":"","help":"","trend":{"delta":"+8%","tone":"good","since":"last week"}},{"id":"rep","label":"Lead reply time","value":0.6,"shown":"0.6 days","status":"good","target":"under 1 day","sub":"12 leads this week","link":null,"better":"down","tip":"","help":"","trend":{"delta":"−0.2d","tone":"good","since":"last week"}},{"id":"pre","label":"Spring preorders","value":14,"shown":"14","status":"warn","target":"25 by 12/15","sub":"11 to go","link":null,"better":"up","tip":"","help":"","trend":{"delta":"+5","tone":"good","since":"last week"}}],"tasks":{"open":4},"waiting":[{"what":"Approve the Display Builder email copy","link":"#demo","age":1}],"tone":"good","great":["Closed the first deal the outreach agent found","Every lead answered same day"],"better":["Spring preorder calls are behind the plan"],"help":["Give him the top 20 list on Monday"]},{"name":"Keshav","role":"Operations & Logistics","color":"#4f7f8c","focus":"Freight cost, stock, collections","targets":[["Freight + 3PL","under 18%"],["AR 30+ days","under $8k"]],"metrics":[{"id":"fr","label":"Freight + 3PL","value":16.4,"shown":"16.4%","status":"good","target":"under 18%","sub":"of revenue","link":null,"better":"down","tip":"","help":"","trend":{"delta":"−1.1pt","tone":"good","since":"last week"}},{"id":"ar","label":"AR 30+ days late","value":6900,"shown":"$6.9k","status":"good","target":"under $8k","sub":"2 accounts","link":null,"better":"down","tip":"","help":"","trend":{"delta":"−$1.2k","tone":"good","since":"last week"}},{"id":"cov","label":"Top sellers cover","value":38,"shown":"38 days","status":"warn","target":"45+ days","sub":"poles running low","link":null,"better":"up","tip":"","help":"","trend":{"delta":"−4d","tone":"bad","since":"last week"}}],"tasks":{"open":3},"waiting":[{"what":"OK the drawback claim (CAD 1,940)","link":"#demo","age":2}],"tone":"good","great":["Saved $180 on the Indiana transfer with 3 quotes","Drawback claim ready 2 weeks early"],"better":["Receiving times still not set"],"help":["Approve the claim today"]},{"name":"Thiago","role":"Creative & Media","color":"#c49a2c","focus":"Fresh ad creative, sales tools","targets":[["Ad concepts","4 / month"],["Sell sheets","every program"]],"metrics":[{"id":"ads","label":"New ad concepts live","value":5,"shown":"5","status":"good","target":"4 / month","sub":"this month","link":null,"better":"up","tip":"","help":"","trend":{"delta":"+8%","tone":"good","since":"last week"}},{"id":"hold","label":"Best hold rate","value":0.41,"shown":"41%","status":"good","target":"30%+","sub":"climb hook cut","link":null,"better":"up","tip":"","help":"","trend":{"delta":"+8%","tone":"good","since":"last week"}},{"id":"rv","label":"Ad cuts voted","value":9,"shown":"9 of 12","status":"warn","target":"all by Mon","sub":"3 left","link":null,"better":"up","tip":"","help":"","trend":{"delta":"+8%","tone":"good","since":"last week"}}],"tasks":{"open":3},"waiting":[],"tone":"good","great":["Climb hook cut is the best hold rate yet"],"better":["3 ad cuts still need a vote"],"help":["Book the spring shoot day"]}],"coach":{"week":"W45","headline":"Strong week: sales on pace, freight under target. Two things wait on you.","unblocks":["Approve Keshav’s drawback claim (2 min)","Send Aidan the top-20 preorder list"],"people":{"Aidan":{"great":["Closed the first deal the outreach agent found","Every lead answered same day"],"better":["Spring preorder calls are behind the plan"],"help":["Give him the top 20 list on Monday"],"talk":["What’s one thing slowing you down?"],"shoutout":"Closed the first deal the outreach agent found"},"Keshav":{"great":["Saved $180 on the Indiana transfer with 3 quotes","Drawback claim ready 2 weeks early"],"better":["Receiving times still not set"],"help":["Approve the claim today"],"talk":["What’s one thing slowing you down?"],"shoutout":"Saved $180 on the Indiana transfer with 3 quotes"},"Thiago":{"great":["Climb hook cut is the best hold rate yet"],"better":["3 ad cuts still need a vote"],"help":["Book the spring shoot day"],"talk":["What’s one thing slowing you down?"],"shoutout":"Climb hook cut is the best hold rate yet"}}}},"links":{"hub":"https://demo.invalid/page","gmailJobs":"https://demo.invalid/gmail"},"warnings":[],"fixes":{}}</script><script src="cc_api.js"></script><style>#demo-chip{position:fixed;right:12px;bottom:12px;z-index:2147483000;background:#58604a;color:#fff;font:600 11px/1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;padding:7px 10px;border-radius:999px;opacity:.9;pointer-events:none}</style><script>addEventListener("DOMContentLoaded",()=>{const c=document.createElement("div");c.id="demo-chip";c.textContent="Demo · fictional data";document.body.appendChild(c)})</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: header → needs-me tiles → KPI strip → [network or money flow | agent card + live feed] → ask → business pulse → back office */
+:root{
+  --bg:#f3f4ee; --surface:#ffffff; --surface-2:#eaece2; --line:#d8dbcc; --fg:#272922; --muted:#686a5c;
+  --moss:#58604a; --moss-ink:#ffffff; --sage:#b1b599; --blush:#fabeb4; --blush-ink:#a9473a;
+  --ok:#5a8a2a; --warn:#b97f0c; --fail:#b32024; --idle:#96988a;
+  --root:#a4a98a; --edge:#d9dccd;
+  --c1:#2a78d6; --c2:#eb6834; --c3:#1baf7a; --c4:#eda100; --c5:#e87ba4;
+  --shadow:0 1px 2px rgba(39,41,34,.06),0 8px 24px rgba(39,41,34,.06);
+  --f-display:"Poppins",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"DM Sans",ui-sans-serif,system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#13160f; --surface:#1c2018; --surface-2:#252a20; --line:#323828; --fg:#eaecdf; --muted:#a3a593;
+  --moss:#7d8763; --moss-ink:#ffffff; --sage:#7f8568; --blush:#f2b0a5; --blush-ink:#f2b0a5;
+  --ok:#8cc04a; --warn:#e3b23e; --fail:#ec5f55; --idle:#787b6c; --root:#5f664f; --edge:#30362a;
+  --c1:#3987e5; --c2:#d95926; --c3:#199e70; --c4:#c98500; --c5:#d55181;
+  --shadow:none; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#13160f; --surface:#1c2018; --surface-2:#252a20; --line:#323828; --fg:#eaecdf; --muted:#a3a593;
+  --moss:#7d8763; --moss-ink:#ffffff; --sage:#7f8568; --blush:#f2b0a5; --blush-ink:#f2b0a5;
+  --ok:#8cc04a; --warn:#e3b23e; --fail:#ec5f55; --idle:#787b6c; --root:#5f664f; --edge:#30362a;
+  --c1:#3987e5; --c2:#d95926; --c3:#199e70; --c4:#c98500; --c5:#d55181;
+  --shadow:none; color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5;padding:20px max(16px,env(safe-area-inset-left,0px)) 48px}
+.wrap{max-width:1360px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+button{font:inherit;color:inherit}
+.ico{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.num{font-variant-numeric:tabular-nums}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.side-h{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px;display:flex;align-items:center;gap:6px}
+:focus-visible{outline:2px solid var(--blush-ink);outline-offset:2px}
+
+/* header */
+header.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{height:26px;width:auto;display:block}
+.logo-dark{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .logo-light{display:none}:root:not([data-theme="light"]) .logo-dark{display:block}}
+:root[data-theme="dark"] .logo-light{display:none}
+:root[data-theme="dark"] .logo-dark{display:block}
+h1{font-family:var(--f-display);font-weight:600;font-size:20px;margin:0;line-height:1.1;padding-left:14px;border-left:1px solid var(--line)}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.live{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:var(--surface)}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:blink 1.6s infinite}
+.live.stale i{background:var(--warn);animation:none}
+@keyframes blink{50%{opacity:.25}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:3px}
+.seg button{border:0;background:none;padding:6px 12px;border-radius:9px;cursor:pointer;display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--moss);color:var(--moss-ink)}
+.iconbtn{border:1px solid var(--line);background:var(--surface);border-radius:10px;width:36px;height:36px;display:grid;place-items:center;cursor:pointer;font-size:17px;color:var(--muted)}
+.iconbtn:hover{color:var(--fg)}
+
+/* needs-me tiles */
+.needs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.need{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:var(--surface);cursor:pointer;box-shadow:var(--shadow);position:relative}
+.need .ni{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:18px;flex:none;background:var(--surface-2);color:var(--st)}
+.need[data-tone="fail"]{--st:var(--fail);border-color:color-mix(in srgb,var(--fail) 45%,var(--line))}
+.need[data-tone="warn"]{--st:var(--warn)}
+.need[data-tone="ok"]{--st:var(--ok)}
+.need b{display:block;font-weight:600;line-height:1.3}
+.need small{display:block;color:var(--muted);font-size:13px;margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.need .go{font-size:12px;font-weight:600;color:var(--moss);margin-top:6px;display:inline-flex;gap:4px;align-items:center}
+.need[aria-pressed="true"]{outline:2px solid var(--moss);outline-offset:-1px}
+.need.calm{cursor:default;--st:var(--ok)}
+.nd{padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.nd-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.nd-h b{font-family:var(--f-display);font-weight:600;font-size:16px}
+.nd-h small{display:block;color:var(--muted);font-size:13px}
+.nd-acts{display:flex;gap:8px;align-items:center}
+.nd ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.nd li{display:flex;gap:8px;align-items:stretch}
+.nd .nd-main{flex:1;min-width:0;display:block;padding:10px 12px;border-radius:12px;background:var(--surface-2);color:inherit;text-decoration:none}
+.nd a.nd-main:hover{outline:1px solid var(--line)}
+.nd-x{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:0 12px;cursor:pointer;font-size:12.5px;color:var(--muted)}
+.nd-x:hover{color:var(--fail);border-color:color-mix(in srgb,var(--fail) 45%,var(--line))}
+.nd details{font-size:13px;color:var(--muted)}.nd details li{margin-top:6px}.nd details .nd-main{opacity:.7}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 14px;border-radius:12px;font-size:14px;display:flex;gap:12px;align-items:center;z-index:50;box-shadow:var(--shadow)}
+.toast button{border:0;background:none;color:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
+.nd li span{font-size:14px;font-weight:500}.nd li small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.nd .go{font-size:12px;font-weight:600;color:var(--moss)}
+.nd-idea{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.nd-idea textarea{font:inherit;font-size:14px;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-height:80px;resize:vertical}
+.nd-ok{font-size:13px;font-weight:600;color:var(--ok)}.nd-err{font-size:13px;color:var(--fail)}
+a.btn{text-decoration:none}
+
+/* KPI strip */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border-radius:18px;overflow:hidden;border:1px solid var(--line)}
+.kpi{background:var(--surface);padding:12px 16px;display:flex;flex-direction:column;gap:1px;border:0;text-align:left;cursor:pointer;min-width:0}
+.kpi:hover{background:var(--surface-2)}
+.kpi[aria-pressed="true"]{background:var(--surface-2);box-shadow:inset 0 -3px 0 var(--moss)}
+.kpi .lab{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:flex;gap:6px;align-items:center}
+.kpi .val{font-family:var(--f-display);font-weight:600;font-size:22px;line-height:1.25}
+.kpi .note{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi[data-tone="fail"] .val{color:var(--fail)}
+.kpi[data-tone="warn"] .val{color:var(--warn)}
+.kpi[data-tone="ok"] .val{color:var(--ok)}
+
+/* main grid */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+.leftcol{display:flex;flex-direction:column;gap:16px;min-width:0}
+.stage{overflow:hidden}
+.stage-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px 0;flex-wrap:wrap}
+.stage-h h2{font-family:var(--f-display);font-weight:600;font-size:16px;margin:0}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:9px;height:9px;border-radius:50%;background:var(--st)}
+.canvas{overflow-x:auto;padding:4px 8px 8px}
+.canvas svg{display:block;width:100%;min-width:760px;height:auto}
+.sidecol{display:flex;flex-direction:column;gap:16px;min-width:0}
+.panel{padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+
+/* network */
+.root{fill:none;stroke:var(--root);stroke-width:1.8;stroke-linecap:round}
+.root.fail{stroke:var(--fail);stroke-dasharray:4 5}
+.root-flow{fill:none;stroke:var(--moss);stroke-width:1.6;stroke-dasharray:1.5 9;stroke-linecap:round;opacity:.5;animation:flow 2.4s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-21}}
+.sysedge{fill:none;stroke:var(--edge);stroke-width:1.1}
+.sysedge.hl,.root.hl{stroke:var(--blush-ink);stroke-width:2}
+.agent{cursor:pointer}
+.agent .moss{transform-box:fill-box;transform-origin:center;animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.07)}}
+.agent[data-st="ok"]{--st:var(--ok)}.agent[data-st="warn"]{--st:var(--warn)}.agent[data-st="fail"]{--st:var(--fail)}.agent[data-st="idle"]{--st:var(--idle)}
+.agent .moss circle{fill:var(--st)}
+.agent .disc{fill:var(--surface);stroke:var(--st);stroke-width:2}
+.agent .glyph{color:var(--st)}
+.agent text{font-size:10.5px;fill:var(--fg);font-weight:500}
+.agent .cnt{font-size:9.5px;fill:var(--muted);font-family:var(--f-mono)}
+.agent .halo{fill:none;stroke:var(--st);stroke-width:2;opacity:0}
+.agent[data-st="fail"] .halo{animation:halo 1.8s ease-out infinite}
+.agent.ping .halo{animation:halo .9s ease-out 1}
+@keyframes halo{0%{opacity:.8;r:20}100%{opacity:0;r:40}}
+.agent.sel .disc{stroke-width:3.5}
+.agent.dim,.sys.dim{opacity:.22}
+.sys circle{fill:var(--surface-2);stroke:var(--line)}
+.sys .glyph{color:var(--muted)}
+.sys text{font-size:11px;fill:var(--muted);font-weight:500}
+.sys.ping circle{fill:var(--blush);stroke:var(--blush-ink)}
+.sys.ping .glyph{color:var(--blush-ink)}
+.mini rect{fill:var(--moss)}
+.mini text{fill:var(--moss-ink)}
+.mini .ring{fill:none;stroke:var(--moss);opacity:.4;transform-box:fill-box;transform-origin:center;animation:ring 3s ease-out infinite}
+@keyframes ring{0%{transform:scale(1);opacity:.45}100%{transform:scale(1.35);opacity:0}}
+.areatag{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;fill:var(--muted);text-transform:uppercase}
+
+/* money flow */
+.band{fill:none;stroke-linecap:butt;opacity:.32;transition:opacity .2s}
+.band.hl{opacity:.75}.band.fade{opacity:.08}
+.cnode rect{fill:var(--surface);stroke:var(--line)}
+.cnode{cursor:pointer}
+.cnode .l{font-size:12.5px;font-weight:600;fill:var(--fg)}
+.cnode .v{font-size:11px;fill:var(--muted)}
+.cnode.mid rect{stroke:var(--st,var(--line));stroke-width:1.5}
+.cnode[data-st="ok"]{--st:var(--ok)}.cnode[data-st="warn"]{--st:var(--warn)}.cnode[data-st="fail"]{--st:var(--fail)}.cnode[data-st="idle"]{--st:var(--idle)}
+.cnode.mid .glyph{color:var(--st)}
+.cnode .glyph{color:var(--muted)}
+.cnode.ping rect{fill:var(--surface-2)}
+.colh{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;fill:var(--muted);text-transform:uppercase}
+
+/* side card */
+.card-h{display:flex;gap:12px;align-items:center}
+.badge{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:22px;background:var(--surface-2);color:var(--moss);flex:none}
+.card-h h3{margin:0;font-family:var(--f-display);font-weight:600;font-size:17px;line-height:1.2}
+.card-h small{color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--surface-2);align-self:flex-start}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--st,var(--ok))}
+[data-st="ok"]{--st:var(--ok)}[data-st="warn"]{--st:var(--warn)}[data-st="fail"]{--st:var(--fail)}[data-st="idle"]{--st:var(--idle)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{display:flex;flex-direction:column;min-width:0}
+.stat b{font-family:var(--f-display);font-weight:600;font-size:19px;line-height:1.2}
+.stat span{font-size:12px;color:var(--muted)}
+.spark{width:100%;height:56px;display:block}
+.spark rect{fill:var(--sage)}
+.spark rect.last{fill:var(--moss)}
+.spark rect:hover{fill:var(--blush-ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 10px;border-radius:999px;background:var(--surface-2);border:0;cursor:default}
+.chip i{width:7px;height:7px;border-radius:50%;background:var(--st,var(--idle))}
+.jobs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.jobs li{display:grid;grid-template-columns:auto 1fr;gap:2px 8px;font-size:13px}
+.jobs li i{width:8px;height:8px;border-radius:50%;background:var(--st);margin-top:6px}
+.jobs li small{grid-column:2;color:var(--muted);font-size:12px}
+.jobs li.fx{grid-template-columns:auto 1fr auto}
+.jobs li.fx small,.jobs li.fx .fxs{grid-column:2/-1}
+.fixbtn{grid-column:3;grid-row:1;align-self:start;border:1px solid var(--moss);background:var(--moss);color:var(--moss-ink);border-radius:10px;padding:3px 12px;cursor:pointer;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:5px}
+.fixbtn:hover{filter:brightness(1.08)}
+.fixbtn:disabled{opacity:.55;cursor:default}
+.nd .fixbtn{align-self:stretch;padding:0 14px}
+.fxs{font-size:12px;line-height:1.4;padding:6px 9px;border-radius:9px;background:var(--surface-2);margin-top:2px}
+.nd .fxs{background:var(--surface);margin-top:6px}
+.fxs[data-f="fixed"],.fxs[data-f="ok"]{color:var(--ok)}
+.fxs[data-f="failed"]{color:var(--fail)}
+.fxs[data-f="needs_you"],.fxs[data-f="waiting"]{color:var(--warn)}
+.fxs[data-f="busy"]{color:var(--fg)}
+.fxs em{font-style:normal;color:var(--muted);display:block}
+.why{font-size:12px;color:var(--muted);grid-column:2/-1}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 12px;cursor:pointer;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--moss);color:var(--moss-ink);border-color:var(--moss)}
+
+/* feed */
+.feedpanel{display:flex;flex-direction:column;overflow:hidden}
+.feedpanel .side-h{padding:16px 18px 0}
+.feed{list-style:none;margin:0;padding:6px 10px 12px;overflow-y:auto;height:600px;overscroll-behavior:contain}
+.feed li{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:8px;border-radius:12px;cursor:pointer;align-items:start}
+.feed li:hover{background:var(--surface-2)}
+.feed .ti{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--surface-2);color:var(--st);font-size:15px}
+.feed li[data-o="ok"]{--st:var(--ok)}.feed li[data-o="warn"]{--st:var(--warn)}.feed li[data-o="fail"]{--st:var(--fail)}
+.feed .tx{font-size:13px;line-height:1.35;min-width:0;overflow-wrap:anywhere}
+.feed .tx b{font-weight:600}
+.feed time{display:block;font-size:11px;color:var(--muted);font-family:var(--f-mono);margin-top:2px}
+.feed li.new{animation:newrow 2.4s ease}
+@keyframes newrow{0%{background:color-mix(in srgb,var(--blush) 55%,transparent)}100%{background:transparent}}
+.feed li.open{background:var(--surface-2)}
+.fdet{grid-column:1/-1;margin:6px 0 2px;padding:10px 12px;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-size:13px;display:flex;flex-direction:column;gap:6px;cursor:default}
+.fdet dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px}
+.fdet dt{color:var(--muted);font-size:12px;padding-top:1px}
+.fdet dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}
+.fdet .quote{border-left:3px solid var(--sage);padding:2px 0 2px 10px}
+.fdet .acts{display:flex;gap:8px;flex-wrap:wrap}
+.fdet a{color:var(--moss);font-weight:600;font-size:12px}
+.fdet button{border:0;background:none;color:var(--moss);font-weight:600;font-size:12px;cursor:pointer;padding:0}
+.feed .empty{color:var(--muted);font-size:13px;padding:12px 8px;cursor:default}
+
+/* ask */
+.ask{padding:18px;display:flex;flex-direction:column;gap:12px}
+.ask-h{display:flex;align-items:center;gap:10px}
+.ask-h h2{font-family:var(--f-display);font-weight:600;font-size:16px;margin:0}
+.summary{font-size:14px;line-height:1.55;background:var(--surface-2);border-radius:12px;padding:12px 14px}
+.summary b{font-weight:600}
+.askform{display:flex;gap:8px}
+.askform input{flex:1;min-width:0;font:inherit;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+.qchips{display:flex;flex-wrap:wrap;gap:6px}
+.qchips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer;color:var(--muted)}
+.qchips button:hover{color:var(--fg);border-color:var(--moss)}
+.thread{display:flex;flex-direction:column;gap:10px}
+.qa{border-top:1px solid var(--line);padding-top:10px}
+.qa .q{font-weight:600;font-size:14px;display:flex;gap:6px;align-items:center}
+.qa .a{font-size:14px;white-space:pre-wrap;margin-top:4px;line-height:1.55}
+.qa .a.err{color:var(--fail)}
+.qa .meta{font-size:11px;color:var(--muted);font-family:var(--f-mono);margin-top:4px}
+.dots::after{content:"";animation:dots 1.2s steps(4) infinite}
+@keyframes dots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
+
+/* pulse */
+/* team view (Lucas only: scorecards for Aidan, Keshav, Thiago) */
+.team{display:flex;flex-direction:column;gap:16px}
+.tm-top{padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:18px}
+.tm-top .big{font-family:var(--f-display);font-weight:600;font-size:26px;line-height:1.15}
+.tm-top .sub,.tm-note{font-size:13px;color:var(--muted)}
+.tm-top ol{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.tm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;align-items:start}
+.tm-card{padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0;border-top:4px solid var(--pc)}
+.tm-h{display:flex;align-items:center;gap:12px}
+.tm-av{width:40px;height:40px;border-radius:50%;background:var(--pc);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-weight:600;font-size:17px;flex:none}
+.tm-h h3{margin:0;font-family:var(--f-display);font-weight:600;font-size:17px;line-height:1.2}
+.tm-h small{color:var(--muted);font-size:13px}
+.tm-pill{margin-left:auto;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--surface-2);color:var(--st);white-space:nowrap}
+.team [data-st="good"]{--st:var(--ok)}.team [data-st="warn"]{--st:var(--warn)}.team [data-st="bad"]{--st:var(--fail)}.team [data-st="nodata"],.team [data-st="neutral"]{--st:var(--muted)}
+.tm-targets{display:flex;flex-wrap:wrap;gap:6px}
+.tm-targets span{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--surface-2);color:var(--muted)}
+.tm-targets b{color:var(--fg);font-weight:600}
+.tm-ms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tm-m{background:var(--surface);padding:10px 12px;display:flex;flex-direction:column;gap:1px;min-width:0;color:inherit;text-decoration:none}
+a.tm-m:hover{background:var(--surface-2)}
+.tm-m:last-child:nth-child(odd){grid-column:1/-1}
+.tm-m .lab{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tm-m .val{font-family:var(--f-display);font-weight:600;font-size:19px;line-height:1.25;color:var(--st);display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.tm-m[data-st="neutral"] .val{color:var(--fg)}
+.tm-m[data-st="nodata"] .val{font-size:15px}
+.tm-m .tr{font-family:var(--f-body);font-size:12px;font-weight:600}
+.tm-m .tr.good{color:var(--ok)}.tm-m .tr.bad{color:var(--fail)}.tm-m .tr.flat{color:var(--muted)}
+.tm-m .note{font-size:12px;color:var(--muted);line-height:1.35}
+.tm-m .tgt{font-size:11px;color:var(--muted)}
+.tm-l h4{margin:0 0 4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--st);display:flex;gap:6px;align-items:center}
+.tm-l ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px;font-size:14px}
+.tm-wait{display:flex;flex-direction:column;gap:4px}
+.tm-wait a{font-size:13px;color:var(--fg);text-decoration:none;display:flex;justify-content:space-between;gap:10px;padding:6px 10px;border-radius:10px;background:var(--surface-2)}
+.tm-wait a:hover{outline:1px solid var(--line)}
+.tm-wait a span:last-child{color:var(--muted);white-space:nowrap}
+.tm-card details{font-size:14px}
+.tm-card summary{cursor:pointer;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tm-fb{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2)}
+.tm-fb .seg button{font-size:13px;padding:5px 10px}
+.tm-fb input,.tm-fb textarea{font:inherit;font-size:14px;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%}
+.tm-fb textarea{min-height:260px;resize:vertical;line-height:1.5}
+.tm-fb .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tm-fb .to{font-size:12.5px;color:var(--muted)}
+.tm-fb .msg{font-size:13px}.tm-fb .msg.err{color:var(--fail)}
+.btn.danger{background:var(--fail);color:#fff;border-color:var(--fail)}
+.tm-shout{font-size:13px;padding:8px 12px;border-radius:12px;background:color-mix(in srgb,var(--pc) 14%,var(--surface));}
+@media (max-width:760px){.tm-top{grid-template-columns:1fr}.tm-grid{grid-template-columns:1fr}}
+.pulse{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.pc{padding:16px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.pc .big{font-family:var(--f-display);font-weight:600;font-size:26px;line-height:1.15}
+.pc .sub{font-size:13px;color:var(--muted)}
+.bars{display:flex;align-items:flex-end;gap:6px;height:84px;margin-top:6px}
+.bars div{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end;min-width:0}
+.bars span.b{width:100%;background:var(--sage);border-radius:4px 4px 0 0;min-height:3px}
+.bars div.last span.b{background:var(--moss)}
+.bars div:hover span.b{background:var(--blush-ink)}
+.bars small{font-size:10px;color:var(--muted)}
+.hrow{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font-size:13px}
+.track{height:8px;border-radius:4px;background:var(--surface-2);overflow:hidden}
+.track span{display:block;height:100%;border-radius:4px;background:var(--st)}
+.rows{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.goal{font-size:11px;color:var(--muted)}
+.list{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:13px}
+.list li{display:flex;justify-content:space-between;gap:10px}
+.list li span:last-child{color:var(--muted);white-space:nowrap}
+
+/* back office + where */
+.foot{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px}
+.where{width:100%;border-collapse:collapse;font-size:13px}
+.where td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.where td:first-child{color:var(--muted);padding-right:12px;width:45%}
+.where a{color:var(--moss);font-weight:600}
+.warnings{font-size:12px;color:var(--muted)}
+
+/* tooltip + login */
+#tip{position:fixed;pointer-events:none;background:var(--fg);color:var(--bg);font-size:12px;padding:5px 9px;border-radius:8px;opacity:0;transition:opacity .1s;z-index:20;white-space:nowrap}
+#login{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:30;padding:16px}
+#login form{width:min(360px,100%);padding:28px;display:flex;flex-direction:column;gap:14px}
+#login input{font:inherit;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+#login .err{color:var(--fail);font-size:13px;min-height:1em;margin:0}
+.alist{display:none}
+
+@media (max-width:1100px){.main{grid-template-columns:1fr}.foot{grid-template-columns:1fr}.feed{height:460px}}
+@media (max-width:700px){
+  h1{font-size:17px}
+  .canvas svg{min-width:640px}
+  .alist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:0 12px 12px}
+  .alist button{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:7px 9px;font-size:13px;text-align:left;cursor:pointer;min-width:0}
+  .alist button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .alist i{width:8px;height:8px;border-radius:50%;background:var(--st);flex:none}
+  .askform{flex-direction:column}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="login" hidden>
+  <form class="card" id="loginform">
+    <img class="logo logo-light" src="logo-black.png" alt="Mossify"><img class="logo logo-dark" src="logo-white.png" alt="Mossify">
+    <h2 style="font-family:var(--f-display);margin:0;font-size:20px">Command Center</h2>
+    <p id="denied" style="margin:0;color:var(--muted)" hidden>This page only opens on Lucas's devices signed in to Tailscale. Turn Tailscale on and reload.</p>
+    <input type="password" id="pw" placeholder="Password" autocomplete="current-password" aria-label="Password" required>
+    <button class="btn primary" type="submit" style="justify-content:center;padding:10px">Sign in</button>
+    <p class="err" id="loginerr"></p>
+  </form>
+</div>
+<div class="wrap" id="app">
+  <header class="top">
+    <div class="brand">
+      <img class="logo logo-light" src="logo-black.png" alt="Mossify"><img class="logo logo-dark" src="logo-white.png" alt="Mossify">
+      <h1>Command Center</h1>
+    </div>
+    <div class="tools">
+      <span class="live" id="live"><i></i><span id="livetxt">Connecting</span></span>
+      <div class="seg" role="group" aria-label="View">
+        <button id="v-net" aria-pressed="true"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="4" cy="5" r="2"/><circle cx="20" cy="5" r="2"/><circle cx="4" cy="19" r="2"/><circle cx="20" cy="19" r="2"/><path d="M6 6l4 4M18 6l-4 4M6 18l4-4M18 18l-4-4"/></svg>Network</button>
+        <button id="v-flow" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24"><path d="M3 6c6 0 6 12 12 12h6M3 18c6 0 6-12 12-12h6"/></svg>Money flow</button>
+        <button id="v-team" aria-pressed="false"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.3-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.8c1.7.8 2.7 2.5 3 5.2"/></svg>Team</button>
+      </div>
+      <button class="iconbtn" id="theme" aria-label="Switch light or dark"><svg class="ico" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg></button>
+      <button class="iconbtn" id="logout" aria-label="Sign out" hidden><svg class="ico" viewBox="0 0 24 24"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/></svg></button>
+    </div>
+  </header>
+
+  <section class="needs" id="needs" aria-label="Needs you"></section>
+  <section class="card nd" id="needdetail" aria-live="polite" hidden></section>
+  <section class="kpis" id="kpis" aria-label="Key numbers"></section>
+
+  <section class="team" id="team" aria-label="Team scorecards" hidden></section>
+
+  <div class="main" id="mainwrap">
+    <div class="leftcol">
+      <section class="card stage">
+        <div class="stage-h"><h2 id="stage-title">How everything connects</h2>
+          <div class="legend"><span data-st="ok"><i></i>Healthy</span><span data-st="warn"><i></i>Watch</span><span data-st="fail"><i></i>Failing</span><span data-st="idle"><i></i>Waiting</span></div></div>
+        <div class="canvas"><svg id="net" viewBox="0 0 1000 730" role="img" aria-label="Agents connected to the Mac mini and to business systems"></svg>
+          <svg id="flow" viewBox="0 0 1000 560" role="img" aria-label="Sales channels flowing through agents to results" hidden></svg></div>
+        <div class="alist" id="alist"></div>
+      </section>
+      <section class="card ask" id="ask">
+        <div class="ask-h"><div class="badge" style="width:36px;height:36px;font-size:18px"><svg class="ico" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg></div><h2>Ask your agents</h2></div>
+        <div class="summary" id="summary">Loading…</div>
+        <div class="qchips" id="qchips"></div>
+        <form class="askform" id="askform"><input id="q" placeholder="How is everything performing today?" aria-label="Ask a question" autocomplete="off"><button class="btn primary" type="submit"><svg class="ico" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2-6z"/></svg>Ask</button></form>
+        <div class="thread" id="thread"></div>
+      </section>
+    </div>
+    <div class="sidecol">
+      <section class="card panel" id="side" aria-live="polite"></section>
+      <section class="card feedpanel"><p class="side-h"><svg class="ico" viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>Live activity</p><ol class="feed" id="feed"></ol></section>
+    </div>
+  </div>
+
+  <section class="pulse" id="pulse" aria-label="Business pulse"></section>
+  <section class="foot">
+    <div class="card panel"><p class="side-h">Back office jobs</p><div class="chips" id="back"></div><div class="warnings" id="warnings"></div></div>
+    <div class="card panel"><p class="side-h">Where to look</p><table class="where" id="where"></table></div>
+  </section>
+</div>
+<div id="tip"></div>
+<script>
+const I={
+server:'<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/>',
+clipboard:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 3h6v3H9zM9 11h6M9 15h4"/>',
+users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.3-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.8c1.7.8 2.7 2.5 3 5.2"/>',
+mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+receipt:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+file:'<path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 13h5M10 17h5"/>',
+megaphone:'<path d="M3 10v4h3l9 5V5L6 10z"/><path d="M18 9a4 4 0 0 1 0 6"/>',
+film:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/>',
+shield:'<path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+camera:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>',
+tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8" r="1.2"/>',
+box:'<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>',
+compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+inbox:'<path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/>',
+refresh:'<path d="M20 11a8 8 0 0 0-14.6-4.5M4 13a8 8 0 0 0 14.6 4.5"/><path d="M5 3v4h4M19 21v-4h-4"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+trend:'<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>',
+bag:'<path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+meta:'<path d="M7 8c-2.5 0-4 2-4 4s1.5 4 4 4c3 0 7-8 10-8 2.5 0 4 2 4 4s-1.5 4-4 4c-3 0-7-8-10-8z"/>',
+flag:'<path d="M5 21V4h12l-2 4 2 4H5"/>',
+store:'<path d="M4 9l1-5h14l1 5"/><path d="M4 9h16v11H4z"/><path d="M10 20v-6h4v6"/>',
+dollar:'<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6v12"/>',
+grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+bank:'<path d="M3 9l9-5 9 5M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20h18"/>',
+chat:'<path d="M4 5h16v11H9l-5 4z"/>',
+cart:'<circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h3l2.5 12h11.5l2-8H6"/>',
+alert:'<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>',
+sprout:'<path d="M12 21v-9"/><path d="M12 12c0-4-3-6-7-6 0 4 3 6 7 6zM12 10c0-3.5 2.5-6 7-6 0 4-3 6-7 6z"/>',
+truck:'<path d="M2 6h12v10H2zM14 9h4l3 3v4h-7"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>',
+check:'<path d="M5 12l5 5 9-10"/>',
+spark:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/>'
+};
+const ico=(n,cls='ico')=>`<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${I[n]||I.spark}</svg>`;
+const NS='http://www.w3.org/2000/svg';
+const $=id=>document.getElementById(id);
+function el(tag,attrs={},parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+function glyph(parent,name,x,y,size,cls='glyph'){const g=el('g',{class:cls,transform:`translate(${x-size/2},${y-size/2}) scale(${size/24})`},parent);g.innerHTML=`<g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${I[name]||I.spark}</g>`;return g}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const money=v=>v==null?'–':(Math.abs(v)>=10000?'$'+(v/1000).toFixed(1)+'k':'$'+Math.round(v).toLocaleString());
+const ago=t=>{if(!t)return 'never';const s=(Date.now()-(typeof t==='number'?t*1000:Date.parse(t)))/1000;if(s<60)return 'just now';if(s<3600)return Math.round(s/60)+'m ago';if(s<86400)return Math.round(s/3600)+'h ago';return Math.round(s/86400)+'d ago'};
+const clock=t=>new Date(t*1000).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+const stLabel={ok:'Healthy',warn:'Watch',fail:'Failing',idle:'Waiting for schedule'};
+const AREA_ORDER=['Sales','Finance','Marketing','Social','Store','Team','Personal'];
+const tip=$('tip');
+document.addEventListener('mousemove',e=>{const t=e.target.closest&&e.target.closest('[data-tip]');if(!t){tip.style.opacity=0;return}tip.textContent=t.dataset.tip;tip.style.opacity=1;const w=tip.offsetWidth;tip.style.left=Math.min(innerWidth-w-8,e.clientX+12)+'px';tip.style.top=(e.clientY-34)+'px'});
+
+let S=null,view='net',sel=null,filter=null,needSel=null;const seen=new Set();let firstLoad=true;
+const BY={};
+
+/* ---------- particles ---------- */
+const P=[];
+function travel(path,color,dur=900,r=4.5){if(REDUCED||!path||!path.isConnected)return Promise.resolve();return new Promise(res=>{const c=el('circle',{r,fill:color},path.ownerSVGElement.querySelector('.particles'));P.push({c,path,len:path.getTotalLength(),start:performance.now(),dur,res})})}
+(function loop(now){for(let k=P.length-1;k>=0;k--){const p=P[k];let t=(now-p.start)/p.dur;if(t>=1){p.c.remove();P.splice(k,1);p.res();continue}t=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;const pt=p.path.getPointAtLength(p.len*t);p.c.setAttribute('cx',pt.x);p.c.setAttribute('cy',pt.y)}requestAnimationFrame(loop)})(performance.now());
+const outColor=o=>o==='fail'?'var(--fail)':o==='warn'?'var(--warn)':'var(--ok)';
+
+/* ---------- network (A) ---------- */
+const NET={nodes:{},roots:{},sedges:{},snodes:{},key:''};
+function buildNet(){
+  const svg=$('net');svg.innerHTML='';const cx=500,cy=365;
+  const gE=el('g',{},svg),gR=el('g',{},svg),gP=el('g',{class:'particles'},svg),gN=el('g',{},svg);
+  const A=[...S.nodes].sort((a,b)=>AREA_ORDER.indexOf(a.area)-AREA_ORDER.indexOf(b.area));const N=A.length;
+  const pos={};A.forEach((a,k)=>{const ang=-Math.PI/2+(k+.5)*2*Math.PI/N;pos[a.id]={x:cx+268*Math.cos(ang),y:cy+236*Math.sin(ang),ang}});
+  const used=Object.keys(S.systems).filter(s=>A.some(a=>a.sys.includes(s)));
+  const sang={};used.forEach(s=>{let sx=0,sy=0;A.filter(a=>a.sys.includes(s)).forEach(a=>{sx+=Math.cos(pos[a.id].ang);sy+=Math.sin(pos[a.id].ang)});sang[s]=Math.atan2(sy,sx)});
+  const order=used.sort((p,q)=>sang[p]-sang[q]);const gap=2*Math.PI/Math.max(order.length+2,12);
+  for(let it=0;it<80;it++){for(let k=0;k<order.length;k++){const p=order[k],q=order[(k+1)%order.length];let d=sang[q]-sang[p];if(k===order.length-1)d+=2*Math.PI;if(d<gap){const f=(gap-d)/2;sang[p]-=f;sang[q]+=f}}}
+  const spos={};order.forEach(s=>spos[s]={x:cx+440*Math.cos(sang[s]),y:cy+318*Math.sin(sang[s])});
+  NET.nodes={};NET.roots={};NET.sedges={};NET.snodes={};
+  A.forEach((a,k)=>{const p=pos[a.id];const mx=(cx+p.x)/2,my=(cy+p.y)/2;const sg=k%2?1:-1;const nx=-(p.y-cy),ny=p.x-cx;const L=Math.hypot(nx,ny);const d=`M${cx},${cy}Q${mx+sg*nx/L*34},${my+sg*ny/L*34} ${p.x},${p.y}`;
+    NET.roots[a.id]=el('path',{d,class:'root'},gR);el('path',{d,class:'root-flow','data-id':a.id},gR);
+    a.sys.forEach(s=>{const q=spos[s];if(!q)return;const mx2=(p.x+q.x)/2,my2=(p.y+q.y)/2;const kx=cx+(mx2-cx)*1.14,ky=cy+(my2-cy)*1.14;NET.sedges[a.id+'|'+s]=el('path',{d:`M${p.x},${p.y}Q${kx},${ky} ${q.x},${q.y}`,class:'sysedge'},gE)})});
+  const areas={};A.forEach(a=>(areas[a.area]=areas[a.area]||[]).push(pos[a.id].ang));
+  Object.entries(areas).forEach(([ar,angs])=>{const m=Math.atan2(angs.reduce((s,x)=>s+Math.sin(x),0),angs.reduce((s,x)=>s+Math.cos(x),0));const t=el('text',{x:cx+150*Math.cos(m),y:cy+128*Math.sin(m)+3,'text-anchor':'middle',class:'areatag'},gN);t.textContent=ar});
+  order.forEach(s=>{const q=spos[s];const g=el('g',{class:'sys',transform:`translate(${q.x},${q.y})`},gN);el('circle',{r:21},g);glyph(g,S.systems[s].icon,0,0,18);const t=el('text',{y:36,'text-anchor':'middle'},g);t.textContent=S.systems[s].name;NET.snodes[s]=g});
+  const mini=el('g',{class:'mini',transform:`translate(${cx},${cy})`},gN);el('rect',{class:'ring',x:-84,y:-36,width:168,height:72,rx:18},mini);el('rect',{x:-84,y:-36,width:168,height:72,rx:18},mini);
+  const mg=glyph(mini,'server',-56,0,22,'');mg.style.color='var(--moss-ink)';
+  const t1=el('text',{x:-38,y:-4,'font-size':14,'font-weight':600,'font-family':'var(--f-display)'},mini);t1.textContent='Mac mini';
+  NET.miniSub=el('text',{x:-38,y:14,'font-size':10.5,opacity:.85},mini);
+  const split=n=>{if(n.length<=12)return[n];const w=n.split(' ');let a='',b='';w.forEach(x=>{if(!b&&(a+' '+x).trim().length<=12)a=(a+' '+x).trim();else b=(b+' '+x).trim()});return b?[a,b]:[a]};
+  A.forEach(a=>{const p=pos[a.id];const g=el('g',{class:'agent',transform:`translate(${p.x},${p.y})`,tabindex:0,role:'button'},gN);
+    el('circle',{class:'halo',r:20},g);const m=el('g',{class:'moss'},g);m.style.animationDelay=(-rnd()*4).toFixed(2)+'s';
+    for(let k=0;k<9;k++){const an=k/9*Math.PI*2+rnd();const rr=12+rnd()*6;el('circle',{cx:(Math.cos(an)*rr).toFixed(1),cy:(Math.sin(an)*rr).toFixed(1),r:(5+rnd()*5).toFixed(1),opacity:(.3+rnd()*.45).toFixed(2)},m)}
+    el('circle',{class:'disc',r:16},g);glyph(g,a.icon,0,0,17);
+    const tx=el('text',{y:38,'text-anchor':'middle'},g);const lines=split(a.name);lines.forEach((ln,j)=>{const ts=el('tspan',{x:0,dy:j?12:0},tx);ts.textContent=ln});
+    el('text',{class:'cnt',y:38+lines.length*12,'text-anchor':'middle'},g);
+    NET.nodes[a.id]=g;g.addEventListener('click',()=>select(sel===a.id?null:a.id));g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(sel===a.id?null:a.id)}})});
+}
+function paintNet(){
+  S.nodes.forEach(a=>{const g=NET.nodes[a.id];if(!g)return;g.dataset.st=a.status;g.setAttribute('aria-label',`${a.name}, ${stLabel[a.status]}, ${a.actionsToday} actions today`);
+    g.querySelector('.cnt').textContent=a.actionsToday?`${a.actionsToday} today`:'';NET.roots[a.id].classList.toggle('fail',a.status==='fail');
+    const f=$('net').querySelector(`.root-flow[data-id="${a.id}"]`);if(f)f.style.display=a.status==='fail'?'none':''});
+  const healthy=S.nodes.filter(a=>a.status!=='fail').length;NET.miniSub.textContent=`${S.nodes.length} agents · ${healthy} healthy`;
+  applyHighlight();
+}
+function pulseNet(e){const g=NET.nodes[e.node];if(!g)return;g.classList.remove('ping');void g.getBBox();g.classList.add('ping');
+  travel(NET.roots[e.node],'var(--blush-ink)',850,4).then(()=>{const p=NET.sedges[e.node+'|'+e.sys]||Object.entries(NET.sedges).find(([k])=>k.startsWith(e.node+'|'))?.[1];if(!p)return;
+    travel(p,outColor(e.out),850,4.5).then(()=>{const s=Object.entries(NET.sedges).find(([,v])=>v===p)[0].split('|')[1];const sn=NET.snodes[s];if(sn){sn.classList.add('ping');setTimeout(()=>sn.classList.remove('ping'),700)}})})}
+
+/* ---------- money flow (C) ---------- */
+const FL={bands:[],nodes:{},key:''};
+function buildFlow(){
+  const svg=$('flow');svg.innerHTML='';const F=S.flow;const gB=el('g',{},svg),gP=el('g',{class:'particles'},svg),gN=el('g',{},svg);
+  const top=44,bottom=548;const act=id=>(BY[id]?.actions7d||0);
+  const wAgent=id=>3+Math.min(26,Math.log2(1+act(id))*3.2);
+  const links=F.links.filter(([c,a])=>BY[a]),outs=F.outs.filter(([a])=>BY[a]);
+  const lw={};links.forEach(([c,a])=>{const n=links.filter(l=>l[1]===a).length;lw[c+'>'+a]=wAgent(a)/n});
+  const ow={};outs.forEach(([a,r])=>{const n=outs.filter(l=>l[0]===a).length;ow[a+'>'+r]=wAgent(a)/n});
+  const L=F.channels.map((c,i)=>({...c,col:`--c${i+1}`,kind:'l'})),M=F.agents.map(id=>({id,name:BY[id].name,icon:BY[id].icon,a:BY[id],kind:'mid'})),R=F.results.map(r=>({...r,kind:'r'}));
+  const hOf=(n,k)=>Math.max(46,k==='l'?links.filter(l=>l[0]===n.id).reduce((s,l)=>s+lw[l[0]+'>'+l[1]],0)+16:k==='mid'?wAgent(n.id)+16:outs.filter(l=>l[1]===n.id).reduce((s,l)=>s+ow[l[0]+'>'+l[1]],0)+16);
+  function layout(list,x,w,k){const hs=list.map(n=>hOf(n,k));const tot=hs.reduce((s,h)=>s+h,0);const g=(bottom-top-tot)/Math.max(1,list.length-1);let y=top;list.forEach((n,i)=>{n.x=x;n.w=w;n.y=y;n.h=hs[i];y+=hs[i]+g})}
+  layout(L,20,200,'l');layout(M,400,200,'mid');layout(R,780,200,'r');
+  const off={};FL.bands=[];
+  function band(from,to,w,color,key){const ko=from.id+key+'o',ki=to.id+key+'i';off[ko]=off[ko]||0;off[ki]=off[ki]||0;
+    const fo=key==='a'?links.filter(l=>l[0]===from.id).reduce((s,l)=>s+lw[l[0]+'>'+l[1]],0):outs.filter(l=>l[0]===from.id).reduce((s,l)=>s+ow[l[0]+'>'+l[1]],0);
+    const ti=key==='a'?links.filter(l=>l[1]===to.id).reduce((s,l)=>s+lw[l[0]+'>'+l[1]],0):outs.filter(l=>l[1]===to.id).reduce((s,l)=>s+ow[l[0]+'>'+l[1]],0);
+    const y1=from.y+(from.h-fo)/2+off[ko]+w/2,y2=to.y+(to.h-ti)/2+off[ki]+w/2;off[ko]+=w;off[ki]+=w;
+    const x1=from.x+from.w,x2=to.x,mx=(x1+x2)/2;
+    const p=el('path',{d:`M${x1},${y1}C${mx},${y1} ${mx},${y2} ${x2},${y2}`,class:'band','stroke-width':Math.max(1.5,w-1).toFixed(1),style:`stroke:var(${color})`},gB);FL.bands.push({p,from:from.id,to:to.id,key,color})}
+  const byL=Object.fromEntries(L.map(n=>[n.id,n])),byM=Object.fromEntries(M.map(n=>[n.id,n])),byR=Object.fromEntries(R.map(n=>[n.id,n]));
+  links.forEach(([c,a])=>{if(byL[c]&&byM[a])band(byL[c],byM[a],lw[c+'>'+a],byL[c].col,'a')});
+  outs.forEach(([a,r])=>{if(byM[a]&&byR[r])band(byM[a],byR[r],ow[a+'>'+r],'--sage','b')});
+  [['Sales channels',20],['Agents at work',400],['Results',780]].forEach(([t,x])=>{const h=el('text',{x,y:26,class:'colh'},svg);h.textContent=t});
+  FL.nodes={};
+  const fv=n=>n.kind==='l'?(n.count?`${n.value} ${n.label}`:`${money(n.value)} ${n.label}`):n.kind==='r'?(n.value==null?'–':n.fmt==='x'?n.value.toFixed(1)+'x':String(n.value)):`${n.a.actionsToday} today · ${n.a.health7??'–'}% healthy`;
+  [...L,...M,...R].forEach(n=>{const g=el('g',{class:'cnode '+n.kind,transform:`translate(${n.x},${n.y})`,tabindex:0,role:'button'},gN);if(n.a)g.dataset.st=n.a.status;
+    el('rect',{width:n.w,height:n.h,rx:12},g);const cyy=n.h/2;const gl=glyph(g,n.icon,22,cyy,18);if(n.col)gl.style.color=`var(${n.col})`;
+    const t=el('text',{x:40,y:cyy-3,class:'l'},g);t.textContent=n.name;const v=el('text',{x:40,y:cyy+13,class:'v'},g);v.textContent=fv(n);
+    const hl=on=>FL.bands.forEach(b=>{const hit=b.from===n.id||b.to===n.id;b.p.classList.toggle('hl',on&&hit);b.p.classList.toggle('fade',on&&!hit)});
+    g.addEventListener('mouseenter',()=>hl(true));g.addEventListener('mouseleave',()=>hl(false));
+    g.addEventListener('click',()=>{if(n.a)select(n.id)});FL.nodes[n.id+n.kind]=g});
+}
+function pulseFlow(e){const g=FL.nodes[e.node+'mid'];if(!g)return;const ins=FL.bands.filter(b=>b.key==='a'&&b.to===e.node),outs=FL.bands.filter(b=>b.key==='b'&&b.from===e.node);
+  const bi=ins[Math.floor(Math.random()*ins.length)],bo=outs[Math.floor(Math.random()*outs.length)];
+  const go=()=>{g.classList.add('ping');setTimeout(()=>g.classList.remove('ping'),600);if(bo)travel(bo.p,outColor(e.out),1000,5)};
+  if(bi)travel(bi.p,`var(${bi.color})`,1000,5).then(go);else go()}
+
+/* ---------- filters ---------- */
+const KPI_NODES={sales:['po','ar','crm','store','ads','etsy','deal'],ads:['ads','creative','klav','ig'],ar:['ar','net','ap'],ai:null,down:null,needs:null,actions:null};
+function activeIds(){if(needSel!=null){const n=S.needs[needSel];return n&&n.node?[n.node]:null}
+  if(!filter)return null;if(filter==='down')return S.nodes.filter(a=>a.status==='fail'||a.status==='warn').map(a=>a.id);
+  if(filter==='needs')return [...new Set(S.needs.map(n=>n.node).filter(Boolean))];if(filter==='ai')return S.nodes.filter(a=>a.cost7>0).map(a=>a.id);
+  if(filter==='actions')return S.nodes.filter(a=>a.actionsToday>0).map(a=>a.id);return KPI_NODES[filter]}
+function applyHighlight(){const ids=activeIds();
+  Object.entries(NET.nodes).forEach(([id,g])=>{g.classList.toggle('dim',!!ids&&!ids.includes(id));g.classList.toggle('sel',id===sel)});
+  Object.entries(NET.sedges).forEach(([k,p])=>p.classList.toggle('hl',!!sel&&k.startsWith(sel+'|')));
+  Object.entries(NET.roots).forEach(([k,p])=>p.classList.toggle('hl',k===sel));
+  Object.entries(NET.snodes).forEach(([s,g])=>g.classList.toggle('dim',!!ids&&!ids.some(id=>BY[id]?.sys.includes(s))));
+  $('alist').querySelectorAll('button').forEach(b=>b.style.opacity=ids&&!ids.includes(b.dataset.id)?.35:1)}
+function select(id){sel=id;applyHighlight();renderSide();if(id&&innerWidth<1100)$('side').scrollIntoView({behavior:REDUCED?'auto':'smooth',block:'start'})}
+
+/* ---------- renderers ---------- */
+function renderNeeds(){const box=$('needs');const N=S.needs||[];
+  if(!N.length){box.innerHTML=`<div class="need calm"><span class="ni">${ico('check')}</span><span><b>Nothing needs you right now</b><small>Every agent is inside its lane. Updated ${ago(S.updated)}.</small></span></div>`;return}
+  box.innerHTML=N.map((n,i)=>`<button class="need" data-i="${i}" data-tone="${n.tone}" aria-pressed="${needSel===i}"><span class="ni">${ico(n.icon)}</span><span><b>${esc(n.title)}</b><small>${esc(n.detail)}</small><span class="go">${needSel===i?'Hide details ↑':'See details ↓'}</span></span></button>`).join('');
+  box.querySelectorAll('.need').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,n=N[i];
+    needSel=needSel===i?null:i;filter=null;sel=needSel!=null&&n.node?n.node:sel;renderNeeds();renderKpis();applyHighlight();renderSide();if(needSel!=null)$('needdetail').scrollIntoView({behavior:REDUCED?'auto':'smooth',block:'nearest'})});
+  renderNeedDetail()}
+const IDEA={};
+function ideaHtml(x){const st=IDEA[x.idea]||{},done=st.link||(x.started&&x.started.link);
+  if(done)return `<div class="nd-idea"><span class="nd-ok">✓ Started${st.link?'':' '+ago(new Date(x.started.ts*1000).toISOString())} · plan comes back by email first</span> <a class="go" href="${esc(st.link||x.started.link)}" target="_blank" rel="noopener">Open the thread →</a></div>`;
+  return `<div class="nd-idea">${st.edit?`<textarea data-ideanote="${esc(x.idea)}" placeholder="Your changes or suggestions, e.g. only the top 10 deals, have Aidan own it, wait until after Spring launch…">${esc(st.note||'')}</textarea>`:''}
+    <div class="nd-acts"><button class="btn primary" data-ideago="${esc(x.idea)}" ${st.busy?'disabled':''}>${st.busy?'Starting…':st.edit?'Start with my changes':'Start this'}</button>${st.edit?`<button class="btn" data-ideacancel="${esc(x.idea)}">Cancel</button>`:`<button class="btn" data-ideaedit="${esc(x.idea)}">Change it first</button>`}</div>
+    ${st.err?`<div class="nd-err">${esc(st.err)}</div>`:''}</div>`}
+async function ideaStart(id){const st=IDEA[id]=IDEA[id]||{};st.busy=true;st.err='';renderNeedDetail(true);
+  try{const r=await api('/api/idea/start',{id,note:st.edit?(st.note||''):''});if(r.ok){st.link=r.link;st.edit=false}else st.err=r.error||'Did not go through.'}catch(e){st.err='Could not reach the Command Center.'}
+  st.busy=false;renderNeedDetail(true)}
+function renderNeedDetail(force){const d=$('needdetail'),n=needSel!=null?(S.needs||[])[needSel]:null;
+  if(!force&&n&&Object.values(IDEA).some(v=>v.edit||v.busy))return;d.hidden=!n;if(!n)return;
+  const it=n.items||[];const row=x=>{const inner=`<span>${esc(x.text)}</span>${x.sub?`<small>${esc(x.sub)}</small>`:''}`;
+    const x2=x.key?`<button class="nd-x" data-scrap="${esc(x.key)}" data-t="${esc(x.text)}" title="Not needed or already handled: hide it here">Scrap</button>`:x.job?fixBtn(x.job):'';
+    if(x.job)return `<li><div class="nd-main">${inner}${fixLine(x.job)}</div>${x2}</li>`;
+    if(x.idea)return `<li><div class="nd-main">${inner}${ideaHtml(x)}</div>${x2}</li>`;
+    return `<li>${x.link?`<a class="nd-main" href="${esc(x.link)}" target="_blank" rel="noopener">${inner}<span class="go">Open →</span></a>`:`<div class="nd-main">${inner}</div>`}${x2}</li>`};
+  const sc=n.scrapped||[];
+  d.innerHTML=`<div class="nd-h"><div><b>${esc(n.title)}</b><small>${esc(n.detail||'')}</small></div><div class="nd-acts">${n.link?`<a class="btn primary" href="${esc(n.link)}" target="_blank" rel="noopener">${esc(n.linkLabel||'Open')} →</a>`:''}<button class="iconbtn" id="ndclose" aria-label="Close">✕</button></div></div>
+    ${it.length?`<ol>${it.map(row).join('')}</ol>`:'<div class="sub" style="color:var(--muted);font-size:13px">No more detail recorded for this one.</div>'}
+    ${sc.length?`<details><summary>${sc.length} scrapped · restore</summary><ol>${sc.map(x=>`<li><div class="nd-main"><span>${esc(x.text)}</span></div><button class="nd-x" data-restore="${esc(x.key)}">Restore</button></li>`).join('')}</ol></details>`:''}`;
+  $('ndclose').onclick=()=>{Object.keys(IDEA).forEach(k=>{if(!IDEA[k].link)delete IDEA[k]});needSel=null;renderNeeds();applyHighlight();renderSide()};
+  d.querySelectorAll('[data-ideago]').forEach(b=>b.onclick=()=>ideaStart(b.dataset.ideago));
+  d.querySelectorAll('[data-ideaedit]').forEach(b=>b.onclick=()=>{(IDEA[b.dataset.ideaedit]=IDEA[b.dataset.ideaedit]||{}).edit=true;renderNeedDetail(true);d.querySelector(`[data-ideanote="${CSS.escape(b.dataset.ideaedit)}"]`)?.focus()});
+  d.querySelectorAll('[data-ideacancel]').forEach(b=>b.onclick=()=>{delete IDEA[b.dataset.ideacancel];renderNeedDetail(true)});
+  d.querySelectorAll('[data-ideanote]').forEach(t=>t.oninput=()=>{IDEA[t.dataset.ideanote].note=t.value});
+  d.querySelectorAll('[data-scrap]').forEach(b=>b.onclick=()=>scrapItem(b.dataset.scrap,b.dataset.t,false));
+  d.querySelectorAll('[data-restore]').forEach(b=>b.onclick=()=>scrapItem(b.dataset.restore,'',true))}
+async function scrapItem(key,title,undo){const cur=needSel!=null?(S.needs||[])[needSel]:null,icon=cur&&cur.icon;
+  try{const r=await api('/api/dismiss',{key,title,undo});if(!r.ok){toast(r.error||'Did not go through.');return}}catch(e){toast('Could not reach the Command Center.');return}
+  delete IDEA[key.replace(/^idea:/,'')];
+  if(undo){toast('Restored. It comes back on the next refresh (within 2 minutes).')}
+  else toast(`Scrapped: ${title.length>60?title.slice(0,59)+'…':title}`,()=>scrapItem(key,'',true));
+  await load();const i=(S.needs||[]).findIndex(n=>n.icon===icon);needSel=i>=0?i:null;renderNeeds();applyHighlight();renderSide()}
+let toastT;function toast(msg,undo){let t=$('toast');if(!t){t=document.createElement('div');t.id='toast';t.className='toast';t.setAttribute('role','status');document.body.appendChild(t)}
+  t.innerHTML=`<span>${esc(msg)}</span>${undo?'<button type="button">Undo</button>':''}`;t.hidden=false;if(undo)t.querySelector('button').onclick=()=>{t.hidden=true;undo()};
+  clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,undo?8000:4000)}
+function renderKpis(){const p=S.pulse||{},t=p.today||{};const tot=Object.values(t).reduce((s,v)=>s+v[1],0);const ord=Object.values(t).reduce((s,v)=>s+v[0],0);
+  const roas=p.ads7?.roas;const down=S.nodes.filter(a=>a.status==='fail').length,watch=S.nodes.filter(a=>a.status==='warn').length;
+  const K=[['needs','alert','Needs you',S.needs.length,S.needs.length?'Tap a tile above':'All clear',S.needs.some(n=>n.tone==='fail')?'fail':S.needs.length?'warn':'ok'],
+    ['sales','bag','Sales today',p.today?money(tot):'–',p.today?`${ord} orders · `+Object.entries(t).map(([k,v])=>`${k.replace('Wholesale ','')} ${money(v[1])}`).join(' · '):'Loading from Shopify',''],
+    ['ads','target','ROAS 7 days',roas?roas.toFixed(1)+'x':'–',p.ads7?`Goal 4.0x · ${money(p.ads7.spend)} spent`:'No ads data',roas?(roas>=3.5?'ok':roas>=2.5?'warn':'fail'):''],
+    ['ar','receipt','AR overdue',p.ar?money(p.ar.overdue):'–',p.ar?`${money(p.ar.over60)} 60+ days · ${p.ar.accounts60} accounts`:'No AR data',p.ar&&p.ar.over60>0?'warn':''],
+    ['actions','spark','Agent actions today',S.actionsToday,`${S.nodes.reduce((s,a)=>s+a.actions7d,0)} in 7 days`,''],
+    ['ai','dollar','AI use 7 days','$'+(S.ai.week||0).toFixed(2),S.ai.paused?`Paused: plan limit until ${new Date(S.ai.paused.until).toLocaleString([],{weekday:'short',hour:'numeric'})}`:`${S.ai.sessionsToday||0} sessions today · ${S.ai.sessionsWeek||0} in 7d`,S.ai.paused?'fail':''],
+    ['down','server','Agents',`${S.nodes.length-down-watch}/${S.nodes.length}`,down||watch?`${down} failing · ${watch} watch`:'All healthy',down?'fail':watch?'warn':'ok']];
+  $('kpis').innerHTML=K.map(([k,i,l,v,n,tone])=>`<button class="kpi" data-k="${k}" data-tone="${tone}" aria-pressed="${filter===k}"><span class="lab">${ico(i)}${l}</span><span class="val num">${esc(v)}</span><span class="note">${esc(n)}</span></button>`).join('');
+  $('kpis').querySelectorAll('.kpi').forEach(b=>b.onclick=()=>{filter=filter===b.dataset.k?null:b.dataset.k;needSel=null;renderKpis();renderNeeds();applyHighlight()})}
+function sparkSvg(vals){const w=280,h=56,n=vals.length,bw=w/n,m=Math.max(...vals,1);const days=vals.map((_,i)=>{const d=new Date();d.setDate(d.getDate()-(n-1-i));return d.toLocaleDateString([],{weekday:'short',month:'numeric',day:'numeric'})});
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" role="img" aria-label="Actions per day, last 14 days">${vals.map((v,i)=>`<rect class="${i===n-1?'last':''}" x="${(i*bw+1).toFixed(1)}" y="${(h-Math.max(2,v/m*(h-4))).toFixed(1)}" width="${(bw-2).toFixed(1)}" height="${Math.max(2,v/m*(h-4)).toFixed(1)}" rx="2" data-tip="${days[i]}: ${v} action${v===1?'':'s'}"/>`).join('')}</svg>`}
+/* ---------- fix agent ---------- */
+const FIXING={},ACTIVE=['queued','checking','restarting','repairing'];
+const allJobs=()=>[...S.nodes.flatMap(n=>n.jobs),...(S.backOffice||[])];
+const jobOf=id=>allJobs().find(j=>j.id===id);
+const canFix=j=>j&&(j.status==='fail'||j.status==='warn');
+const fixBusy=id=>FIXING[id]||ACTIVE.includes(((S.fixes||{})[id]||{}).state);
+function fixBtn(id){const f=(S.fixes||{})[id]||{},j=jobOf(id);
+  if(fixBusy(id))return `<button class="fixbtn" disabled>Fixing<span class="dots"></span></button>`;
+  if(!canFix(j))return '';
+  if(f.state==='fixed'&&Date.now()/1000-(f.ended||0)<600)return '';
+  return `<button class="fixbtn" data-fix="${esc(id)}" title="Restart it, or have the repair agent find and fix the problem">${ico('refresh')}${f.state&&f.state!=='fixed'&&f.state!=='ok'?'Try again':'Fix'}</button>`}
+function fixLine(id){const f=(S.fixes||{})[id];if(!f&&!FIXING[id])return '';
+  if(fixBusy(id)){const st=f&&ACTIVE.includes(f.state)?f:{step:'Starting the fix agent'};
+    return `<div class="fxs" data-f="busy">${st.by==='auto'?'Auto-fix: ':''}${esc(st.step||'Working')}<span class="dots"></span>${st.started?`<em>started ${ago(new Date(st.started*1000).toISOString())}</em>`:''}</div>`}
+  const when=f.ended?clock(f.ended):'',fx=f.fix&&f.fix!=='NONE'?f.fix:'';
+  const head={fixed:`✓ Fixed ${when}${f.by==='auto'?' (automatically)':''}`,ok:'✓ Nothing to fix, it\'s healthy',needs_you:'Needs you',waiting:'Waiting it out',failed:"Couldn't fix it"}[f.state]||f.state;
+  return `<div class="fxs" data-f="${esc(f.state)}"><b>${head}</b>${fx&&f.state==='fixed'?': '+esc(fx):''}${f.cause&&f.state!=='ok'?`<em>Cause: ${esc(f.cause)}</em>`:''}${fx&&f.state!=='fixed'?`<em>Changed: ${esc(fx)}</em>`:''}${f.lucas?`<em>${f.state==='needs_you'?'You: ':''}${esc(f.lucas)}</em>`:''}</div>`}
+function fixAllHtml(){const ids=allJobs().filter(j=>canFix(j)&&!fixBusy(j.id)).map(j=>j.id),busy=allJobs().filter(j=>fixBusy(j.id)).length;
+  const recent=Object.keys(S.fixes||{}).map(jobOf).filter(Boolean);
+  const list=recent.length?`<div><p class="side-h">Fixes today</p><ul class="jobs">${recent.map(j=>`<li data-st="${j.status}" class="fx"><i></i><span>${esc(j.name)}</span>${fixBtn(j.id)}${fixLine(j.id)}</li>`).join('')}</ul></div>`:'';
+  if(!ids.length&&!busy)return list;
+  return `<div class="btnrow">${ids.length?`<button class="btn primary" data-fix="${esc(ids.join(','))}">${ico('refresh')}Fix all ${ids.length} flagged job${ids.length>1?'s':''}</button>`:''}${busy?`<span style="font-size:13px;color:var(--muted)">Fixing ${busy} now<span class="dots"></span></span>`:''}</div>
+    <div style="font-size:12px;color:var(--muted)">Fix restarts it first (free). If that doesn't clear it, a repair agent reads the logs and fixes the code, inside your ask-first rules. Broken jobs also get one automatic try a day.</div>${list}`}
+async function startFix(ids){ids.forEach(i=>FIXING[i]=true);renderSide();renderNeedDetail(true);
+  let r;try{r=await api('/api/fix',{jobs:ids})}catch(e){r={errors:{x:'Could not reach the Command Center.'}}}
+  ids.forEach(i=>delete FIXING[i]);const errs=Object.values(r.errors||{});
+  toast(r.started&&r.started.length?`Fixing ${r.started.length>1?r.started.length+' jobs':(jobOf(r.started[0])||{}).name||'it'}. Watch it here, usually 1–10 min.`:errs[0]||'Did not go through.');
+  await load()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-fix]');if(b&&!b.disabled){e.stopPropagation();startFix(b.dataset.fix.split(','))}});
+setInterval(()=>{if(!document.hidden&&S&&Object.values(S.fixes||{}).some(f=>ACTIVE.includes(f.state)))load()},5000);
+function fixFromHash(){const m=location.hash.match(/^#fix=([\w.-]+)$/);if(!m)return;history.replaceState(null,'',location.pathname+location.search);
+  const id=m[1],j=jobOf(id),n=S.nodes.find(n=>n.jobs.some(x=>x.id===id));setView('net');select(n?n.id:null);
+  if(!j)return toast('That job isn\'t on the mini.');if(fixBusy(id))return toast(`Already fixing ${j.name}. Watch it here.`);
+  if(!canFix(j))return toast(`${j.name} is healthy now. Nothing to fix.`);startFix([id])}
+addEventListener('hashchange',()=>{if(S)fixFromHash()});
+function renderSide(){const side=$('side');
+  if(!sel||!BY[sel]){const c=S.counts;const hs=S.nodes.map(a=>a.health7).filter(v=>v!=null);const avg=hs.length?Math.round(hs.reduce((s,v)=>s+v,0)/hs.length):null;
+    side.innerHTML=`<div class="card-h"><div class="badge">${ico('server')}</div><div><h3>All agents</h3><small>Click any moss cluster for its card</small></div></div>
+    <div class="stats"><div class="stat"><b class="num" style="color:var(--ok)">${c.ok+c.idle}</b><span>Healthy</span></div><div class="stat"><b class="num" style="color:var(--warn)">${c.warn}</b><span>Watch</span></div><div class="stat"><b class="num" style="color:var(--fail)">${c.fail}</b><span>Failing</span></div></div>
+    <div class="stats"><div class="stat"><b class="num">${S.actionsToday}</b><span>Actions today</span></div><div class="stat"><b class="num">$${(S.ai.today||0).toFixed(2)}</b><span>AI cost today</span></div><div class="stat"><b class="num">${avg??'–'}%</b><span>Healthy 7d</span></div></div>
+    <div><p class="side-h">Needs attention</p><div class="chips">${S.nodes.filter(a=>a.status==='fail'||a.status==='warn').map(a=>`<button class="chip" data-st="${a.status}" data-sel="${a.id}" style="cursor:pointer"><i></i>${ico(a.icon)}${esc(a.name)}</button>`).join('')}${(S.backOffice||[]).filter(canFix).map(j=>`<span class="chip" data-st="${j.status}" data-tip="${esc(j.why||j.note||'')}"><i></i>${esc(j.name)} · back office</span>`).join('')||(S.nodes.some(a=>a.status==='fail'||a.status==='warn')?'':'<span class="chip" data-st="ok"><i></i>Nothing, all green</span>')}</div></div>
+    ${fixAllHtml()}`;
+    side.querySelectorAll('[data-sel]').forEach(b=>b.onclick=()=>select(b.dataset.sel));return}
+  const a=BY[sel];const evs=S.feed.filter(e=>e.node===a.id).slice(0,5);
+  side.innerHTML=`<div class="card-h"><div class="badge">${ico(a.icon)}</div><div><h3>${esc(a.name)}</h3><small>${esc(a.area)}${a.lastRun?' · last ran '+ago(a.lastRun):''}</small></div></div>
+  <span class="pill" data-st="${a.status}">${stLabel[a.status]}</span>${a.note?`<div style="font-size:13px;color:var(--muted)">${esc(a.note)}</div>`:''}
+  <div class="stats"><div class="stat"><b class="num">${a.health7??'–'}%</b><span>Healthy 7d</span></div><div class="stat"><b class="num">${a.actionsToday}</b><span>Actions today</span></div><div class="stat"><b class="num">$${(a.cost7||0).toFixed(2)}</b><span>AI cost 7d</span></div></div>
+  <div><p class="side-h">Actions per day · 14 days</p>${sparkSvg(a.spark)}</div>
+  <div><p class="side-h">Jobs on the Mac mini</p><ul class="jobs">${a.jobs.map(j=>{const f=canFix(j)||(S.fixes||{})[j.id];return `<li data-st="${j.status}"${f?' class="fx"':''}><i></i><span>${esc(j.name)}</span>${f?fixBtn(j.id):''}<small>${esc(j.schedule)} · ${j.running?'running':'last ran '+ago(j.lastRun)}${j.note?' · '+esc(j.note):''}</small>${canFix(j)&&j.why?`<span class="why">${esc(j.why)}</span>`:''}${fixLine(j.id)}</li>`}).join('')||'<li><span style="color:var(--muted)">No scheduled job (acts inside other tools)</span></li>'}</ul></div>
+  <div><p class="side-h">Connected to</p><div class="chips">${a.sys.map(s=>`<span class="chip">${ico(S.systems[s].icon)}${esc(S.systems[s].name)}</span>`).join('')}</div></div>
+  <div><p class="side-h">Recent activity</p><ul class="jobs">${evs.map(e=>`<li data-st="${e.out}"><i></i><span>${esc(e.text)}</span><small>${ago(e.ts)}</small></li>`).join('')||'<li><span style="color:var(--muted)">Nothing logged in 30 days</span></li>'}</ul></div>
+  <div class="btnrow"><button class="btn" id="s-ask">${ico('chat')}Ask about ${esc(a.name)}</button><button class="btn" id="s-back">All agents</button></div>`;
+  $('s-back').onclick=()=>select(null);$('s-ask').onclick=()=>{$('q').value=`How is the ${a.name} doing? Anything I should fix?`;$('ask').scrollIntoView({behavior:REDUCED?'auto':'smooth'});$('q').focus()}}
+function feedRow(e,fresh){const a=BY[e.node];return `<li data-o="${e.out}" data-node="${esc(e.node)}" aria-expanded="${e.id===openId}"${fresh?' class="new"':''}><span class="ti">${ico(a?a.icon:'spark')}</span><span class="tx"><b>${esc(a?a.name:e.node)}</b> · ${esc(e.text)}<time>${clock(e.ts)} · ${ago(e.ts)}</time></span></li>`}
+let openId=null;
+const fval=v=>typeof v==='object'?JSON.stringify(v):String(v);
+function detailHtml(e){const d=e.detail||{},a=BY[e.node];const QUOTE=['Comment','Reply','Why'];
+  const rows=Object.entries(d).filter(([k])=>k!=='link'&&!QUOTE.includes(k)).map(([k,v])=>`<dt>${esc(k.replace(/_/g,' '))}</dt><dd>${esc(fval(v))}</dd>`).join('');
+  const quotes=QUOTE.filter(k=>d[k]).map(k=>`<div><dt>${k==='Why'?'Why it did this':k}</dt><dd class="quote">${esc(d[k])}</dd></div>`).join('');
+  return `<div class="fdet">${quotes}${rows?`<dl>${rows}</dl>`:''}${!quotes&&!rows?'<span style="color:var(--muted)">No extra detail logged for this one.</span>':''}
+    <div class="acts">${d.link?`<a href="${esc(d.link)}" target="_blank" rel="noopener">${e.src==='ig'?'Open on Instagram':e.src==='jobs'?'Open in Gmail':'Open'} →</a>`:''}<button type="button" data-agent="${esc(e.node)}">${esc(a?a.name:e.node)} card →</button></div></div>`}
+function renderFeed(fresh){const f=$('feed');const items=S.feed.slice(0,80);
+  f.innerHTML=items.length?items.map(e=>feedRow(e,fresh.has(e.id))).join(''):'<li class="empty">No activity logged yet.</li>';
+  f.querySelectorAll('li[data-node]').forEach((li,i)=>{const e=items[i];if(e.id===openId){li.classList.add('open');li.insertAdjacentHTML('beforeend',detailHtml(e))}
+    li.onclick=ev=>{if(ev.target.closest('.fdet')){const b=ev.target.closest('[data-agent]');if(b)select(b.dataset.agent);return}
+      openId=openId===e.id?null:e.id;renderFeed(new Set())}})}
+function renderAlist(){$('alist').innerHTML=[...S.nodes].sort((a,b)=>AREA_ORDER.indexOf(a.area)-AREA_ORDER.indexOf(b.area)).map(a=>`<button data-id="${a.id}" data-st="${a.status}"><i></i><span>${esc(a.name)}</span></button>`).join('');
+  $('alist').querySelectorAll('button').forEach(b=>b.onclick=()=>select(b.dataset.id))}
+function renderSummary(){const c=S.counts,p=S.pulse||{};const bad=S.nodes.filter(a=>a.status==='fail').map(a=>a.name),watch=S.nodes.filter(a=>a.status==='warn').map(a=>a.name);
+  const busiest=[...S.nodes].sort((a,b)=>b.actionsToday-a.actionsToday)[0];const tot=p.today?Object.values(p.today).reduce((s,v)=>s+v[1],0):null;
+  const parts=[`<b>${c.ok+c.idle} of ${S.nodes.length} agents healthy</b>`+(bad.length?`, <b style="color:var(--fail)">${bad.length} failing</b> (${esc(bad.join(', '))})`:'')+(watch.length?`, ${watch.length} to watch (${esc(watch.join(', '))})`:'')+'.',
+    `${S.actionsToday} actions so far today`+(busiest&&busiest.actionsToday?`, busiest is ${esc(busiest.name)} (${busiest.actionsToday})`:'')+'.',
+    tot!=null?`Sales today ${money(tot)}`+(p.yesterday?` · yesterday ${money(p.yesterday.total)} vs ${money(p.yesterday.lastweek)} the same day last week`:'')+'.':'',
+    p.ads7?.roas?`Ads ${p.ads7.roas.toFixed(1)}x over 7 days (goal 4.0x).`:'',
+    S.needs.length?`<b>${S.needs.length} thing${S.needs.length>1?'s':''} need${S.needs.length>1?'':'s'} you.</b>`:'Nothing needs you.'];
+  $('summary').innerHTML=parts.filter(Boolean).join(' ')}
+const QCHIPS=['How is everything performing today?','What should I look at first?','Which agents are costing the most?','How are sales and ads vs last week?','What did the agents do overnight?'];
+$('qchips').innerHTML=QCHIPS.map(q=>`<button type="button">${esc(q)}</button>`).join('');
+$('qchips').querySelectorAll('button').forEach(b=>b.onclick=()=>{$('q').value=b.textContent;$('askform').requestSubmit()});
+const HIST=[];
+$('askform').onsubmit=async ev=>{ev.preventDefault();const q=$('q').value.trim();if(!q)return;$('q').value='';
+  const d=document.createElement('div');d.className='qa';d.innerHTML=`<div class="q">${ico('chat')}${esc(q)}</div><div class="a dots">Thinking</div>`;$('thread').prepend(d);
+  try{const r=await api('/api/ask',{q,history:HIST});const a=d.querySelector('.a');a.classList.remove('dots');
+    if(r.error){a.classList.add('err');a.textContent=r.error}else{a.textContent=r.answer.replace(/\*\*/g,'').replace(/^#+\s*/gm,'');HIST.push({q,a:r.answer});d.insertAdjacentHTML('beforeend',`<div class="meta">${new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}${r.cost?` · $${r.cost.toFixed(3)}`:''}</div>`)}}
+  catch(e){const a=d.querySelector('.a');a.classList.remove('dots');a.classList.add('err');a.textContent='Could not reach the Command Center.'}}
+function renderPulse(){const p=S.pulse||{};const out=[];
+  if(p.yesterday){const y=p.yesterday,ch=y.lastweek?(y.total-y.lastweek)/y.lastweek*100:null;const m=Math.max(...y.trend.map(t=>t[1]),1);
+    out.push(`<div class="card pc"><p class="side-h">${ico('bag')}Sales · last 7 days</p><div class="big num">${money(y.total)}</div><div class="sub">yesterday${ch!=null?` · <b style="color:${ch>=0?'var(--ok)':'var(--fail)'}">${ch>=0?'▲':'▼'} ${Math.abs(ch).toFixed(0)}%</b> vs same day last week`:''} · CAD</div>
+      <div class="bars">${y.trend.map((t,i)=>{const d=new Date(t[0]+'T12:00:00');return `<div class="${i===y.trend.length-1?'last':''}" data-tip="${d.toLocaleDateString([],{weekday:'short',month:'numeric',day:'numeric'})}: ${money(t[1])}"><span class="b" style="height:${Math.max(3,t[1]/m*64)}px"></span><small>${d.toLocaleDateString([],{weekday:'short'}).slice(0,2)}</small></div>`}).join('')}</div>
+      <ul class="list">${Object.entries(y.byStore).map(([k,v])=>`<li><span>${esc(k)}</span><span>${v[0]} orders · ${money(v[1])}</span></li>`).join('')}</ul></div>`)}
+  if(p.ads7||p.adsYesterday){const a7=p.ads7||{};const top=Math.max(6.3,...Object.values(a7.byChannel||{}));
+    out.push(`<div class="card pc"><p class="side-h">${ico('target')}Ads · 7 days</p><div class="big num" style="color:${a7.roas>=3.5?'var(--ok)':a7.roas>=2.5?'var(--warn)':'var(--fail)'}">${a7.roas?a7.roas.toFixed(1)+'x':'–'}</div><div class="sub">${money(a7.spend)} spent → ${money(a7.value)} credited${a7.asOf?' · to '+esc(a7.asOf):''}</div>
+      <div class="rows">${Object.entries(a7.byChannel||{}).map(([k,v])=>{const st=v>=3.5?'ok':v>=2.5?'warn':'fail';return `<div class="hrow" data-st="${st}"><span>${esc(k.replace(' Ads',''))}</span><span class="track"><span style="width:${Math.min(100,v/top*100)}%"></span></span><span class="num">${v.toFixed(1)}x ${st==='ok'?'✓':st==='warn'?'!':'✕'}</span></div>`}).join('')}</div>
+      ${p.adsYesterday?`<ul class="list">${Object.entries(p.adsYesterday).map(([k,v])=>`<li><span>${esc(k)} yesterday</span><span>${money(v.spend)} → ${money(v.value)}</span></li>`).join('')}</ul>`:''}<div class="goal">Goal 4.5x · Meta self-reports generously</div></div>`)}
+  if(p.ar){out.push(`<div class="card pc"><p class="side-h">${ico('receipt')}Receivables</p><div class="big num">${money(p.ar.overdue)}</div><div class="sub">overdue of ${money(p.ar.outstanding)} outstanding · CAD equiv.</div>
+      <ul class="list"><li><span>60+ days late</span><span style="color:${p.ar.over60?'var(--fail)':'inherit'}">${money(p.ar.over60)}</span></li><li><span>Accounts 60+ days</span><span>${p.ar.accounts60}</span></li><li><span>As of</span><span>${esc(p.ar.asOf)}</span></li></ul></div>`)}
+  if(p.stock){out.push(`<div class="card pc"><p class="side-h">${ico('box')}Stock</p><div class="big num" style="color:${p.stock.out?'var(--fail)':'var(--ok)'}">${p.stock.out} out</div><div class="sub">+ ${p.stock.urgent} running out within lead time</div>
+      <ul class="list">${p.stock.top.map(s=>`<li><span>${esc(s.name.length>34?s.name.slice(0,33)+'…':s.name)}</span><span>${s.perDay}/day</span></li>`).join('')}</ul></div>`)}
+  if(p.calendar||p.inbox){out.push(`<div class="card pc"><p class="side-h">${ico('clock')}Today</p>${p.inbox?`<div class="big num">${p.inbox.unread>=500?'500+':p.inbox.unread}</div><div class="sub">unread · ${p.inbox.drafts} drafts waiting</div>`:''}
+      <ul class="list">${(p.calendar||[]).map(c=>`<li><span>${esc(c.title)}</span><span>${esc(c.time)}</span></li>`).join('')||'<li><span style="color:var(--muted)">Nothing on the calendar</span></li>'}</ul></div>`)}
+  $('pulse').innerHTML=out.join('')||'<div class="card pc"><p class="side-h">Business pulse</p><div class="sub">Loading business numbers from Shopify, Ads and AR. First load can take a few minutes.</div></div>'}
+const TM_TONE={good:'Good week',warn:'Watch',bad:'Needs attention'},TM_ST={good:'on track',warn:'watch',bad:'behind',nodata:'no data',neutral:''};
+function tmMetric(m){const tr=m.trend?`<span class="tr ${m.trend.tone}" title="vs ${esc(m.trend.since)}">${m.trend.delta>0?'▲':m.trend.delta<0?'▼':'–'}</span>`:'';
+  const body=`<span class="lab" title="${esc(m.label)}">${esc(m.label)}</span><span class="val num">${esc(m.shown)}${tr}</span>${m.target?`<span class="tgt">Target ${esc(m.target)}${TM_ST[m.status]?' · '+TM_ST[m.status]:''}</span>`:''}${m.sub?`<span class="note">${esc(m.sub)}</span>`:''}`;
+  return m.link?`<a class="tm-m" data-st="${m.status}" href="${esc(m.link)}" target="_blank" rel="noopener">${body}</a>`:`<div class="tm-m" data-st="${m.status}">${body}</div>`}
+function tmList(title,st,items){return items&&items.length?`<div class="tm-l" data-st="${st}"><h4>${title}</h4><ul>${items.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+function renderTeam(){const T=S.team,box=$('team');
+  if(!T){box.innerHTML='<div class="card pc"><p class="side-h">Team</p><div class="sub">No team scorecard yet. It builds after the first hub sync of the day (7:15 AM).</div></div>';return}
+  const C=T.coach,src=C?`Monday notes · ${esc(C.week)}`:'From the numbers (Monday notes arrive 6:45 AM Mondays)';
+  const un=(C&&C.unblocks&&C.unblocks.length)?C.unblocks:T.people.flatMap(p=>p.waiting.slice(0,1).map(w=>`${p.name}: ${w.what}`)).slice(0,3);
+  box.innerHTML=`<div class="card tm-top"><div><p class="side-h">${ico('users')}Waiting on you</p><div class="big num" style="color:${T.waiting?'var(--warn)':'var(--ok)'}">${T.waiting} item${T.waiting===1?'':'s'}</div>
+      <div class="sub">${T.oldest?`oldest ${T.oldest} days · `:''}things the team can't finish until you decide</div>
+      <div class="tm-note" style="margin-top:8px">Private to you. Updated ${ago(T.updated)}${T.warnings&&T.warnings.length?' · '+esc(T.warnings.join('; ')):''}</div></div>
+    <div><p class="side-h">${ico('check')}Your unblocks this week</p>${C&&C.headline?`<div style="font-size:15px;font-weight:600;margin-bottom:4px">${esc(C.headline)}</div>`:''}${un.length?`<ol>${un.map(u=>`<li>${esc(u)}</li>`).join('')}</ol>`:'<div class="sub">Nothing waiting on you.</div>'}</div></div>
+    <div class="tm-grid">${T.people.map(p=>{const L=(C&&C.people&&C.people[p.name])||{};
+      return `<article class="card tm-card" style="--pc:${p.color}"><div class="tm-h"><span class="tm-av">${esc(p.name[0])}</span><div><h3>${esc(p.name)}</h3><small>${esc(p.role)} · ${esc(p.focus)}</small></div><span class="tm-pill" data-st="${p.tone}">${TM_TONE[p.tone]||''}</span></div>
+        <div class="tm-targets">${p.targets.map(t=>`<span><b>${esc(t[0])}</b> ${esc(t[1])}</span>`).join('')}</div>
+        <div class="tm-ms">${p.metrics.map(tmMetric).join('')}</div>
+        ${tmList('Doing great','good',L.great||p.great)}${tmList('Could do better','warn',L.better||p.better)}${tmList('How you can help','neutral',L.help||p.help)}
+        ${p.waiting.length?`<div class="tm-wait">${p.waiting.map(w=>`<a href="${esc(w.link)}" target="_blank" rel="noopener"><span>${esc(w.what)}</span><span>${w.age?w.age+'d':'open'}</span></a>`).join('')}</div>`:''}
+        ${L.talk&&L.talk.length?`<details><summary>1:1 talking points</summary><ul>${L.talk.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></details>`:''}
+        ${L.shoutout?`<div class="tm-shout"><b>Shout-out idea:</b> ${esc(L.shoutout)}</div>`:''}
+        ${fbHtml(p.name)}
+        <div class="tm-note">${src} · ${p.tasks.open} open hub tasks</div></article>`}).join('')}</div>`;
+  T.people.forEach(p=>fbWire(p.name))}
+const FB={};
+function fbHtml(n){const f=FB[n];if(!f||!f.open)return `<button class="btn" data-fb="${esc(n)}">✉ Draft a feedback email to ${esc(n)}</button>`;
+  if(f.loading)return `<div class="tm-fb"><div class="msg">Writing 3 versions from ${esc(n)}'s scorecard… about 30 seconds.</div></div>`;
+  if(!f.drafts)return `<div class="tm-fb"><div class="msg err">${esc(f.msg||'Something went wrong.')}</div><div class="row"><button class="btn" data-fbretry="${esc(n)}">Try again</button><button class="btn" data-fbclose="${esc(n)}">Close</button></div></div>`;
+  const d=f.drafts[f.sel];
+  return `<div class="tm-fb" data-fbbox="${esc(n)}"><div class="seg" role="group" aria-label="Tone">${f.drafts.map((x,i)=>`<button data-fbtone="${i}" aria-pressed="${i===f.sel}">${esc(x.label)}</button>`).join('')}</div>
+    <div class="to">To ${esc(f.to)} · from lucas@ with your signature · edit anything before it goes</div>
+    <input data-fbsubj value="${esc(d.subject)}" aria-label="Subject"><textarea data-fbbody aria-label="Email text">${esc(d.body)}</textarea>
+    <div class="row"><button class="btn" data-fbsave>Save as Gmail draft</button><button class="btn ${f.confirm?'danger':'primary'}" data-fbsend>${f.confirm?`Click again to send to ${esc(n)}`:'Send email'}</button><button class="btn" data-fbretry="${esc(n)}">Rewrite</button><button class="btn" data-fbclose="${esc(n)}">Close</button></div>
+    ${f.msg?`<div class="msg ${f.err?'err':''}">${f.msg}</div>`:''}</div>`}
+async function fbDraft(n){FB[n]={open:true,loading:true};renderTeam();
+  try{const r=await api('/api/team/draft',{person:n});FB[n]=r.drafts&&r.drafts.length?{open:true,drafts:r.drafts,to:r.to,sel:0}:{open:true,msg:r.error||'No drafts came back.'}}
+  catch(e){FB[n]={open:true,msg:'Could not reach the Command Center.'}}renderTeam()}
+async function fbDeliver(n,mode){const f=FB[n];const d=f.drafts[f.sel];f.msg=mode==='send'?'Sending…':'Saving the draft…';f.err=false;f.confirm=false;renderTeam();
+  try{const r=await api('/api/team/send',{person:n,subject:d.subject,body:d.body,mode});
+    if(r.ok){f.msg=`${mode==='send'?'Sent to':'Draft saved for'} ${esc(r.to)} · <a href="${esc(r.link)}" target="_blank" rel="noopener">open in Gmail</a>`}else{f.err=true;f.msg=esc(r.error||'Did not go through.')}}
+  catch(e){f.err=true;f.msg='Could not reach the Command Center.'}renderTeam()}
+function fbWire(n){const box=$('team');
+  box.querySelectorAll(`[data-fb="${CSS.escape(n)}"]`).forEach(b=>b.onclick=()=>fbDraft(n));
+  box.querySelectorAll(`[data-fbretry="${CSS.escape(n)}"]`).forEach(b=>b.onclick=()=>fbDraft(n));
+  box.querySelectorAll(`[data-fbclose="${CSS.escape(n)}"]`).forEach(b=>b.onclick=()=>{delete FB[n];renderTeam()});
+  const fb=box.querySelector(`[data-fbbox="${CSS.escape(n)}"]`);if(!fb)return;const f=FB[n];
+  fb.querySelectorAll('[data-fbtone]').forEach(b=>b.onclick=()=>{f.sel=+b.dataset.fbtone;f.confirm=false;f.msg='';renderTeam()});
+  fb.querySelector('[data-fbsubj]').oninput=e=>{f.drafts[f.sel].subject=e.target.value};
+  fb.querySelector('[data-fbbody]').oninput=e=>{f.drafts[f.sel].body=e.target.value};
+  fb.querySelector('[data-fbsave]').onclick=()=>fbDeliver(n,'draft');
+  fb.querySelector('[data-fbsend]').onclick=()=>{if(!f.confirm){f.confirm=true;f.msg='';renderTeam();return}fbDeliver(n,'send')}}
+function renderFoot(){$('back').innerHTML=(S.backOffice||[]).map(j=>`<span class="chip" data-st="${j.status}" data-tip="${esc(j.note||stLabel[j.status])} · last ran ${ago(j.lastRun)}"><i></i>${esc(j.name)}</span>`).join('')||'<span class="chip">Every job is on the network</span>';
+  $('warnings').textContent=S.warnings?.length?"Couldn't load: "+S.warnings.join('; '):'';
+  const L=S.links||{};$('where').innerHTML=[['What needs me, how agents and the business are doing','Here'],['Team tasks, campaigns, shipping, POs',`<a href="${L.hub}" target="_blank" rel="noopener">Team Hub</a>`],
+    ['Deals and accounts',`<a href="http://${location.hostname}:8790" target="_blank" rel="noopener">CRM</a>`],['Invoices and reminders','AR dashboard (on the Mac mini)'],['Email-job plans waiting on GO',`<a href="${L.gmailJobs}" target="_blank" rel="noopener">Gmail</a>`],['Daily digest','Morning brief, 7:30 AM']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}
+
+/* ---------- data loop ---------- */
+async function api(path,body){const r=await fetch(path,body?{method:'POST',headers:{'Content-Type':'application/json','X-CC':'1'},body:JSON.stringify(body)}:{});if(r.status===401){const j=await r.json().catch(()=>({}));showLogin(j.password);throw new Error('login')}return r.json()}
+function showLogin(pw){$('login').hidden=false;$('denied').hidden=!!pw;$('pw').hidden=!pw;$('loginform').querySelector('button').hidden=!pw;if(pw)$('pw').focus()}
+$('loginform').onsubmit=async e=>{e.preventDefault();const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json','X-CC':'1'},body:JSON.stringify({password:$('pw').value})});const j=await r.json();
+  if(j.ok){$('login').hidden=true;$('pw').value='';load()}else $('loginerr').textContent=j.error||'Could not sign in.'};
+$('logout').onclick=async()=>{await api('/api/logout',{});location.reload()};
+const queue=[];setInterval(()=>{if(document.hidden||!queue.length)return;const e=queue.shift();if(view==='net')pulseNet(e);else if(view==='flow')pulseFlow(e)},1300);
+async function load(){let s;try{s=await api('/api/snapshot')}catch(e){if(e.message!=='login')setLive(true);return}
+  if(s.error){$('livetxt').textContent=s.error;return}S=s;S.nodes.forEach(n=>BY[n.id]=n);
+  const key=S.nodes.map(n=>n.id).join();if(key!==NET.key){NET.key=key;seed=7;buildNet()}
+  const fkey=key+JSON.stringify(S.flow.channels.map(c=>c.value))+S.nodes.map(n=>n.actions7d).join();if(fkey!==FL.key){FL.key=fkey;buildFlow()}
+  const fresh=new Set();S.feed.forEach(e=>{if(!seen.has(e.id)){if(!firstLoad){fresh.add(e.id);queue.push(e)}seen.add(e.id)}});
+  queue.sort((a,b)=>a.ts-b.ts);if(queue.length>24)queue.splice(0,queue.length-24);
+  if(firstLoad&&!REDUCED){S.feed.slice(0,4).reverse().forEach(e=>queue.push(e))}
+  firstLoad=false;paintNet();renderNeeds();renderKpis();renderSide();renderFeed(fresh);renderAlist();renderSummary();renderPulse();renderFoot();if(view==='team'&&!Object.values(FB).some(f=>f.open))renderTeam();setLive();fixFromHash()}
+function setLive(err){const age=S?(Date.now()-Date.parse(S.updated))/1000:1e9;const stale=err||age>900;$('live').classList.toggle('stale',stale);$('livetxt').textContent=err?'Offline':S?`Live · updated ${ago(S.updated)}`:'Connecting'}
+setInterval(()=>{if(!document.hidden)load()},20000);setInterval(()=>setLive(),15000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
+
+/* ---------- view + theme ---------- */
+function setView(v){view=v;['net','flow','team'].forEach(k=>$('v-'+k).setAttribute('aria-pressed',v===k));$('net').toggleAttribute('hidden',v!=='net');$('flow').toggleAttribute('hidden',v!=='flow');
+  $('mainwrap').toggleAttribute('hidden',v==='team');$('pulse').toggleAttribute('hidden',v==='team');$('team').toggleAttribute('hidden',v!=='team');if(v==='team'&&S)renderTeam();
+  if(v!=='team')$('stage-title').textContent=v==='net'?'How everything connects':'Which agents move revenue';try{localStorage.setItem('cc-view',v)}catch(_){}}
+$('v-net').onclick=()=>setView('net');$('v-flow').onclick=()=>setView('flow');$('v-team').onclick=()=>setView('team');
+try{const v=localStorage.getItem('cc-view');if(v==='flow'||v==='team')setView(v);const t=localStorage.getItem('cc-theme');if(t)document.documentElement.dataset.theme=t}catch(_){}
+$('theme').onclick=()=>{const dark=document.documentElement.dataset.theme?document.documentElement.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;const t=dark?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('cc-theme',t)}catch(_){}};
+load();
+</script>
+</body>
+</html>
