@@ -191,12 +191,12 @@ const STAGES = [
    stats:{agents:18, jobs:64, hub:32, skills:20, projects:38},
    tabs:[['Team Hub','hub-now.html?look=climb','The team’s one page: 32 sections'],['Command Center','cc.html','Lucas’s live map of every agent'],['Morning brief','brief.html?stage=now','The 7:30 AM email']],
    title:'A company that runs itself between check-ins',
-   lead:'18 agents and 64 scheduled jobs. POs become draft orders, stock reorders itself as PO drafts, freight gets quoted by every carrier at once, and broken jobs fix themselves.',
+   lead:'18 always-on agents and 64 scheduled jobs, plus the skills Lucas runs on demand. POs become draft orders, stock reorders itself as PO drafts, freight gets quoted by every carrier at once, and broken jobs fix themselves.',
    changes:['PO drop: a customer’s PO PDF becomes a Shopify draft order in about 2 minutes.','Purchasing agent ranks what to reorder and drafts the supplier PO.','Freight quoting: one request goes to every carrier on the lane, replies land in a compare table.','Command Center: every agent on one live map, with a Fix button.','Fix agent repairs broken jobs on its own, once a day, inside the ask-first rules.','Own review system, customs drawback tracker, team scorecards, alert emails within 10 minutes.'],
    tour:[['Command Center: watch the live feed. Each event flies across the moss network.','tab:1'],['Press Fix on the red Etsy sync card and watch it repair itself.','tab:1'],['Back in the hub, open PO drop: where purchase orders become draft orders.','go:podrop'],['Open Freight → Quoting: three carrier quotes side by side.','go:quoting'],['Switch “View as” to Aidan: private sections disappear.','as:Aidan']],
    next:'Next: the same system for other businesses, through Mossify AI.'}
 ];
-const LABELS = {agents:'agents running', jobs:'scheduled jobs', hub:'hub sections', skills:'skills', projects:'projects'};
+const LABELS = {agents:'always-on agents', jobs:'scheduled jobs', hub:'hub sections', skills:'skills', projects:'projects'};
 const $ = id => document.getElementById(id);
 const seen = new Set();
 let cur = 0, tab = 0, tourAt = 0, asName = 'Lucas', shown = {agents:0,jobs:0,hub:0,skills:0,projects:0};
